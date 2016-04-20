@@ -1,0 +1,259 @@
+package sample;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.EventHandler;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.util.Duration;
+
+import java.awt.event.ActionEvent;
+import java.io.Serializable;
+import java.util.*;
+
+/**
+ * Created by katrin on 3/2/16.
+ */
+public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEatable {
+    private int speed;
+
+    private static Image picture;
+
+    private KeyProccessing kp;
+
+    private boolean isEaten;
+    private boolean IsTurn;
+    private boolean IsVisible;
+
+    private int cur = 0;
+    private int score;
+
+    public void setSpeed(int value)
+    {
+        speed = value;
+        speed = Math.max(0, speed);
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+
+    public void setIsTurn(boolean value) { IsTurn = value;}
+    public boolean getIsTurn(){return IsTurn;}
+
+
+    public int getScore(){return score;}
+
+
+    public MouseJerry(int x, int y, KeyProccessing t)
+    {
+        picture = new Image("/images/jerryRun.png");
+        setX(x);
+        setY(y);
+        kp = t;
+        speed = 2;
+        isEaten = false;
+        IsTurn = false;
+        IsVisible = true;
+        score = 0;
+    }
+
+
+    protected void finalize()
+    {
+        System.out.println("Object mouse is deleted");
+    }
+
+
+    public int dist(int x1, int y1, int x2, int y2)
+    {
+        return (int)Math.sqrt((double)((x1 - x2) * (x1 - x2)  + (y1 - y2) * (y1 - y2)));
+    }
+
+
+    public void  Move(ArrayList<DrawItems> items)
+    {
+        Iterator<DrawItems> it = items.iterator();
+
+        while (it.hasNext()) {
+
+            DrawItems obj = it.next();
+
+            if (obj instanceof VacumCleaner) {
+                if (dist(this.getX(), this.getY(),
+                        obj.getX(), obj.getY()) <= 16) {
+                    this.setIsTurn(true);
+                    continue;
+                }
+
+            }
+
+            if (obj instanceof CatTom) {
+                float dis = dist(this.getX(), this.getY(),
+                        obj.getX(), obj.getY());
+                if (dis <= 16 && IsVisible == true) {
+                    this.eat();
+                    continue;
+                } else
+                if (this.getIsTurn()) {
+                    ((CatTom) obj).setFearStrategy();
+                } else {
+                    if (dis <= 150 && IsVisible == true) {
+                        ((CatTom) obj).setAggressiveStrategy();
+                    } else if (dis > 150 && IsVisible == true) {
+                        ((CatTom) obj).setCalmStrategy();
+                    }
+                }
+            }
+
+            if (obj instanceof IEatable && this != obj) {
+                if (dist(this.getX(), this.getY(),
+                        obj.getX(), obj.getY()) <= 16) {
+                    this.add_score(((IEatable) obj).getScore());
+                    this.setSpeed(getSpeed() + ((IEatable) obj).getSpeed());
+                    ((IEatable) obj).eat();
+                    see_score(this);
+                    continue;
+                }
+            }
+
+            if (obj instanceof Hole) {
+                if (dist(this.getX(), this.getY(),
+                        obj.getX(), obj.getY()) <= 16) {
+                    if (this.score > 0) {
+                        see_score(this);
+                        items.remove(this);
+                        System.exit(0);
+                        continue;
+                    }
+                }
+            }
+            if (obj instanceof Flower) {
+                if (dist(this.getX(), this.getY(),
+                        obj.getX(), obj.getY()) <= 25) {
+                    IsVisible = false;
+                    ((Flower) obj).setPicture_of_flower(2);
+                } else {
+                    IsVisible = true;
+                    ((Flower) obj).setPicture_of_flower(1);
+                }
+            }
+        }
+
+        cur++;
+        if (cur < speed)
+        {
+            return;
+        }
+        cur = 0;
+        update(items);
+    }
+
+
+    public void update(ArrayList<DrawItems> items) {
+        int dx = 0;
+        int dy = 0;
+        HashSet<KeyCode> temp = kp.retHashSet();
+        for (KeyCode i : temp) {
+            if (i == KeyCode.UP) {
+                dy -= 5;
+            }
+            if (i == KeyCode.DOWN) {
+                dy += 5;
+            }
+            if (i == KeyCode.LEFT) {
+                dx -= 5;
+            }
+            if (i == KeyCode.RIGHT) {
+                dx += 5;
+            }
+        }
+
+        tryStep(getX() + dx, getY(), items);
+        tryStep(getX(), getY() + dy, items);
+    }
+
+
+    public void tryStep(int newx, int newy, ArrayList<DrawItems> items){
+
+        boolean canMove = true;
+
+        int dx[] = {-12, 12, -12, 12};
+        int dy[] = {-12, 12, 12, -12};
+
+        for (DrawItems i : items){
+            if ( i instanceof IBarrier) {
+                int x1 = i.getX();
+                int y1 = i.getY();
+                int x2 = ((IBarrier) i).getCornerX();
+                int y2 = ((IBarrier) i).getCornerY();
+
+                for (int j = 0; j < 4; j++) {
+                    int curx = dx[j] + newx;
+                    int cury = dy[j] + newy;
+                    if (x1 <= curx && curx <= x2 &&
+                            y1 <= cury && cury <= y2) {
+                        canMove = false;
+                    }
+                }
+            }
+        }
+
+        if (canMove) {
+            setX(newx);
+            setY(newy);
+        }
+    }
+
+    public void draw(GraphicsContext gc) {
+        if (isEaten == false && IsVisible == true) {
+            gc.drawImage(picture, getX() - 12, getY() - 12);
+        }
+    }
+
+
+    public void add_score(int ad_sc){ score += ad_sc; }
+
+
+    public void set_keypr(KeyProccessing k){ kp = k;}
+
+
+    public void see_score(MouseJerry mi){
+        if (mi.getScore() == 150) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Congratulations!!!");
+            alert.setHeaderText("Congratulations!!!");
+            String s = "YOU ARE WIN!";
+            alert.setContentText(s);
+            Timeline idl = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<javafx.event.ActionEvent>() {
+                @Override
+                public void handle(javafx.event.ActionEvent event) {
+                    alert.setResult(ButtonType.CANCEL);
+                    alert.hide();
+                }
+            }));
+            idl.setCycleCount(1);
+            idl.play();
+            alert.show();
+        }
+    }
+
+    @Override
+    public void eat() {
+        isEaten = true;
+    }
+
+    @Override
+    public boolean isEaten() {
+        return isEaten;
+    }
+
+
+}
+
+    
+

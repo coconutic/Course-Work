@@ -1,0 +1,115 @@
+package sample;
+
+import CatStrategies.CalmStrategy;
+import CatStrategies.FearStrategy;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Random;
+
+/**
+ * Created by katrin on 3/3/16.
+ */
+public class CatTom extends DrawItems implements IMoveble, Serializable, IEnemy{
+
+    private static Image cat;
+
+    private transient static int[] dx = {4, 4};
+    private transient static int[] dy = { -4, 0};
+
+    //private  coordinates;
+
+    private transient static int x_vc = 270;
+    private transient static int y_vc = 600;
+
+    private static CatStrategies.Strategy strategy;
+
+    public CatTom(int x, int y)
+    {
+        cat = new Image("images/cat.png");
+        setX(x);
+        setY(y);
+        setCalmStrategy();
+        System.out.println("Tom is ready to run for a mouse");
+    }
+
+
+    public void signal(MouseJerry jer)
+    {
+        int distance = dist(getX(), getY(), jer.getX(), jer.getY());
+
+        if( distance <= 10 )
+        {
+            System.out.println("Tom see Jerry, start run\n");
+        }else
+        {
+            System.out.println("Tom doesn't see Jerry\n");
+        }
+    }
+
+    public int dist(int x1, int y1, int x2, int y2)
+    {
+        return (int)Math.sqrt((double)((x1 - x2) * (x1 - x2)  + (y1 - y2) * (y1 - y2))); 
+    }
+
+
+    public void setCalmStrategy() {
+        if (!(strategy instanceof CatStrategies.CalmStrategy)) {
+            strategy = new CatStrategies.CalmStrategy();
+        }
+    }
+
+    public void setFearStrategy() {
+        if (!(strategy instanceof CatStrategies.FearStrategy)) {
+            strategy = new CatStrategies.FearStrategy();
+        }
+    }
+
+    public void setAggressiveStrategy() {
+        if (!(strategy instanceof CatStrategies.AggressiveStrategy)) {
+            strategy = new CatStrategies.AggressiveStrategy();
+        }
+    }
+
+        public void tryStep(int newx, int newy, ArrayList<DrawItems> items){
+
+        boolean canMove = true;
+
+        int dx[] = {-8, 8, -8, 8};
+        int dy[] = {-20, 20, 20, -20};
+
+        for (DrawItems i : items){
+            if ( i instanceof IBarrier) {
+                int x1 = i.getX();
+                int y1 = i.getY();
+                int x2 = ((IBarrier) i).getCornerX();
+                int y2 = ((IBarrier) i).getCornerY();
+
+                for (int j = 0; j < 4; j++) {
+                    int curx = dx[j] + newx;
+                    int cury = dy[j] + newy;
+                    if (x1 <= curx && curx <= x2 &&
+                            y1 <= cury && cury <= y2) {
+                        canMove = false;
+                    }
+                }
+            }
+        }
+
+        if (canMove) {
+            setX(newx);
+            setY(newy);
+        }
+    }
+
+    public void Move(ArrayList<DrawItems> items){
+        strategy.Action(this, items);
+    }
+
+
+    public void draw(GraphicsContext gc)  {
+        gc.drawImage(cat, getX() - 8, getY() - 20);
+    }
+}
