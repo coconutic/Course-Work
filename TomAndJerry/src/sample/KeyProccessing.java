@@ -39,6 +39,9 @@ public class KeyProccessing implements Serializable{
                 if (event.getCode() == KeyCode.L) {
                     keyPressed.add(KeyCode.L);
                 }
+                if (event.getCode() == KeyCode.P) {
+                    keyPressed.add(KeyCode.P);
+                }
             }
         });
 
@@ -62,6 +65,9 @@ public class KeyProccessing implements Serializable{
                 }
                 if (event.getCode() == KeyCode.L && keyPressed.contains(KeyCode.L)){
                     keyPressed.remove(KeyCode.L);
+                }
+                if (event.getCode() == KeyCode.P && keyPressed.contains(KeyCode.P)){
+                    keyPressed.remove(KeyCode.P);
                 }
             }
         });

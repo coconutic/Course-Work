@@ -9,7 +9,5 @@ import java.io.Serializable;
  */
 public class DrawItems extends Position implements Serializable{
 
-
-
     public  void draw(GraphicsContext gc) {}
 }

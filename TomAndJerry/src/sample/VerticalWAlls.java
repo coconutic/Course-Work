@@ -20,15 +20,15 @@ public class VerticalWAlls extends DrawItems implements Serializable, IBarrier{
     public VerticalWAlls(int x, int y, int len){
         setX(x);
         setY(y);
-        corner_x = x + 22;
-        corner_y = y + 22 * len;
+        corner_x = x + 40;
+        corner_y = y + 40 * len;
         length = len;
     }
 
     public void draw(GraphicsContext gc) {
-        picture = new Image("images/wall.png");
+        picture = new Image("images/wall_no.png");
         for (int i = 0; i < length; i++){
-            gc.drawImage(picture, getX(), getY() + 22 * i );
+            gc.drawImage(picture, getX(), getY() + 40 * i );
         }
     }
 }

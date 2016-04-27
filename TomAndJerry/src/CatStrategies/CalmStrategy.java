@@ -1,6 +1,7 @@
 package CatStrategies;
 
 import sample.DrawItems;
+import sample.Position;
 
 import java.util.ArrayList;
 
@@ -10,75 +11,142 @@ import java.util.ArrayList;
 public class CalmStrategy implements Strategy {
 
     private boolean Move;
+    private ArrayList<Position> pos;
+    private int way;
+    private int lastpos;
 
     public CalmStrategy(){
         Move = true;
+        way = 0;
+        lastpos = 0;
+        pos = new ArrayList<Position>();
+
+        pos.add(new Position(200, 620));
+        pos.add(new Position(1100, 622));
+        pos.add(new Position(1102, 433));
+        pos.add(new Position(332, 430));
+        pos.add(new Position(330, 152));
+        pos.add(new Position(212, 150));
+     //   pos.add(new Position(330, 155));
+    }
+
+    public int getPos(int curx, int cury){
+        for (int i = 0; i < pos.size() - 1; i++){
+            int x1 = pos.get(i).getX();
+            int x2 = pos.get(i + 1).getX();
+            int y1 = pos.get(i).getY();
+            int y2 = pos.get(i + 1).getY();
+
+            if (y1 > y2)
+            {
+                int temp = y1;
+                y1 = y2;
+                y2 = temp;
+            }
+
+            if (x1 > x2)
+            {
+                int temp = x1;
+                x1 = x2;
+                x2 = temp;
+            }
+            /*
+            System.out.println(String.format("%d %d %d", x1, curx, x2));
+             System.out.println(String.format("%d %d %d", y1, cury, y2));
+             */
+            if ((x1 <= curx && curx <= x2) && (y1 <= cury && cury <= y2))
+            {
+                return i + 1;
+            }
+        }
+        return -1;
     }
 
     @Override
     public void Action(sample.CatTom cat, ArrayList<sample.DrawItems> items) {
-        if (Move)
+        int goalx;
+        int goaly;
+
+        int x = cat.getX();
+        int y = cat.getY();
+
+        int poss = lastpos + 1;
+        int g_index = 0;
+
+        int dx[] ={0, 4, 4, 4, 0, -4, -4, -4};
+        int dy[] ={-4, -4, 0, 4, 4, 4, 0, -4};
+
+        double minimal_distance = 10000;
+
+        if (!Move)
         {
-            move1(cat, items);
+            goalx = pos.get(lastpos).getX();
+            goaly = pos.get(lastpos).getY();
         } else
         {
-            move2(cat, items);
+            goalx = pos.get(poss).getX();
+            goaly = pos.get(poss).getY();
         }
-    }
-    public void move1(sample.CatTom cat, ArrayList<sample.DrawItems> items)
-    {
-        int dx = 0;
-        int dy = 0;
+            for (int i = 0; i < 8; i++) {
+                int new_x = x + dx[i];
+                int new_y = y + dy[i];
+                double distance = Math.sqrt((double)((goalx - new_x)* (goalx - new_x) +
+                           (goaly - new_y) * (goaly - new_y)));
 
-        int point2X = 300;
-        int point2Y = 100;
-        int point3X = 300;
-        int point3Y = 500;
+                if (distance < minimal_distance) {
+                    minimal_distance = distance;
+                    g_index = i;
+                }
+            }
+        int newX = x + dx[g_index];
+        int newY = y + dy[g_index];
+        /*
+        System.out.println(String.format("%d %d %d", pos.get(lastpos).getX(), newX, pos.get(poss).getX()));
+        System.out.println(String.format("%d %d %d", pos.get(lastpos).getY(), newY, pos.get(poss).getY()));
+        System.out.println(String.format("%d %d", goalx, goaly));
+        System.out.println(Move);
+        */
+        int x1 = pos.get(lastpos).getX();
+        int y1 = pos.get(lastpos).getY();
+        int x2 = pos.get(poss).getX();
+        int y2 = pos.get(poss).getY();
+        if (x1 > x2) {
+            int t = x1;
+            x1 = x2;
+            x2 = t;
+        }
+        if (y1 > y2) {
+            int t = y1;
+            y1 = y2;
+            y2 = t;
+        }
 
-        if ((cat.getY() == point2Y) && (cat.getX() > point2X))
-        {
-            dx -= 4;
+
+        if ((x1 <= newX && newX <= x2) &&
+                y1 <= newY && newY <= y2 &&
+                (newX != goalx || newY != goaly)) {
+            cat.setX(newX);
+            cat.setY(newY);
         } else
-        if ((cat.getX() == point3X) && (cat.getY() < point3Y))
         {
-            dy += 4;
-        }
+            if (!Move)
+            {
+                lastpos--;
+            } else
+            {
+                lastpos++;
+            }
 
-        cat.tryStep(cat.getX() + dx, cat.getY(), items);
-        cat.tryStep(cat.getX(), cat.getY() + dy, items);
+            if (lastpos <= 0)
+            {
+                Move = true;
+                lastpos++;
+            }
 
-        if ((cat.getX() == point3X) && (cat.getY() == point3Y))
-        {
-            Move = false;
-        }
-    }
-
-    public void move2(sample.CatTom cat, ArrayList<sample.DrawItems> items)
-    {
-        int dx = 0;
-        int dy = 0;
-
-        int point1X = 500;
-        int point2X = 300;
-        int point2Y = 100;
-        int point3X = 300;
-        int point3Y = 500;
-
-        if ((cat.getY() == point2Y) && (cat.getX() < point1X))
-        {
-            dx += 4;
-        }
-        if ((cat.getX() == point3X) && (cat.getY() > point2Y))
-        {
-            dy -= 4;
-        }
-
-        cat.tryStep(cat.getX() + dx, cat.getY(), items);
-        cat.tryStep(cat.getX(), cat.getY() + dy, items);
-
-        if ((cat.getX() == point1X) && (cat.getY() == point2Y))
-        {
-            Move = true;
+            if (lastpos == pos.size() - 1){
+                Move = false;
+                lastpos--;
+            }
         }
     }
 }

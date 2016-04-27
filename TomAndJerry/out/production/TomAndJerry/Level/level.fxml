@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.canvas.Canvas?>
+
+<Pane fx:controller="Level.Level"
+      xmlns:fx="http://javafx.com/fxml" >
+    <Canvas fx:id="canvas" width="1366" height="768" />
+    <children>
+        <Label fx:id="level1" layoutX="800.0" layoutY="20.0" prefHeight="13.0" prefWidth="500.0" text="level 1" textFill="teal">
+            <font>
+                <Font name="DisneyPark" size="150.0" />
+            </font>
+        </Label>
+        <Label fx:id="level2" layoutX="800.0" layoutY="210.0" prefHeight="13.0" prefWidth="500.0" text="level 2">
+            <font>
+                <Font name="DisneyPark" size="150.0" />
+            </font>
+        </Label>
+    </children>
+</Pane>

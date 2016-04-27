@@ -1,6 +1,7 @@
 package sample;
 
 import GUI.GUI;
+import Level.Level;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -10,8 +11,29 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 
 public class Main extends Application {
+
+    public void go_to_level(FXMLLoader ld, Scene scene) throws IOException{
+        Level l = (Level)ld.getController();
+
+        l.level1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                System.out.println("in handler");
+                try{
+                    Parent root3 =  FXMLLoader.load(getClass().getResource("/sample/sample.fxml"));
+                    scene.setRoot(root3);
+                    System.out.println("yeyeye");
+                } catch (Exception e){
+                    System.out.println(e);
+                }
+            }
+        });
+    }
+
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -30,20 +52,35 @@ public class Main extends Application {
             @Override
             public void handle(MouseEvent event) {
                 try {
-
                     Parent root1 =  FXMLLoader.load(getClass().getResource("sample.fxml"));
-                    primaryStage.setTitle("Tom and Jerry");
                     scene.setRoot(root1);
-                    primaryStage.setScene(scene);
-                    primaryStage.setFullScreen(true);
-                    primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-                    primaryStage.show();
                 } catch (Exception e){
-
+                    System.out.println(e);
                 }
             }
         });
-    }
+
+        gui.level.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try{
+                    //Parent root2 = FXMLLoader.load(getClass().getResource("/Level/level.fxml"));
+                    //scene.setRoot(root2);
+
+                    fxmlLoader.setRoot(null);
+                    fxmlLoader.setController(null);
+                    fxmlLoader.setLocation(getClass().getResource("/Level/level.fxml"));
+                    Parent s = fxmlLoader.load();
+                    scene.setRoot(s);
+                    go_to_level(fxmlLoader, scene);
+                } catch (Exception e){
+                    System.out.println(e);
+                }
+            }
+        });
+
+   }
+
 
     public static void main(String[] args) {
         launch(args);
@@ -51,4 +88,25 @@ public class Main extends Application {
 }
 
 
+/*class FXMLLOADER {
+    Object controller;
+    Page page;
 
+    Object getController() {
+        return controller;
+    }
+
+    private page loadpage() {
+
+        return new Page();
+    }
+
+    public static void load() {
+        return loadpage();
+    }
+
+    public void load() {
+        page = loadpage();
+        controller = page.controller;
+    }
+}*/

@@ -19,14 +19,16 @@ import java.util.*;
  */
 public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEatable {
     private int speed;
+    private int count_cheese;
 
     private static Image picture;
 
     private KeyProccessing kp;
 
     private boolean isEaten;
-    private boolean IsTurn;
     private boolean IsVisible;
+    private boolean Imove;
+    private boolean isDead;
 
     private int cur = 0;
     private int score;
@@ -36,14 +38,9 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
         speed = value;
         speed = Math.max(0, speed);
     }
-
     public int getSpeed() {
         return speed;
     }
-
-
-    public void setIsTurn(boolean value) { IsTurn = value;}
-    public boolean getIsTurn(){return IsTurn;}
 
 
     public int getScore(){return score;}
@@ -51,15 +48,20 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
 
     public MouseJerry(int x, int y, KeyProccessing t)
     {
-        picture = new Image("/images/jerryRun.png");
+        picture = new Image("/images/mouse/mouse_right.png");
+
         setX(x);
         setY(y);
+
         kp = t;
         speed = 2;
-        isEaten = false;
-        IsTurn = false;
-        IsVisible = true;
+        count_cheese = 0;
         score = 0;
+
+        isEaten = false;
+        IsVisible = true;
+        Imove = true;
+        isDead = false;
     }
 
 
@@ -74,7 +76,6 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
         return (int)Math.sqrt((double)((x1 - x2) * (x1 - x2)  + (y1 - y2) * (y1 - y2)));
     }
 
-
     public void  Move(ArrayList<DrawItems> items)
     {
         Iterator<DrawItems> it = items.iterator();
@@ -83,55 +84,51 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
 
             DrawItems obj = it.next();
 
-            if (obj instanceof VacumCleaner) {
-                if (dist(this.getX(), this.getY(),
-                        obj.getX(), obj.getY()) <= 16) {
-                    this.setIsTurn(true);
-                    continue;
-                }
-
-            }
-
             if (obj instanceof CatTom) {
                 float dis = dist(this.getX(), this.getY(),
                         obj.getX(), obj.getY());
                 if (dis <= 16 && IsVisible == true) {
                     this.eat();
+                    this.Imove = false;
                     continue;
                 } else
-                if (this.getIsTurn()) {
-                    ((CatTom) obj).setFearStrategy();
-                } else {
-                    if (dis <= 150 && IsVisible == true) {
-                        ((CatTom) obj).setAggressiveStrategy();
-                    } else if (dis > 150 && IsVisible == true) {
-                        ((CatTom) obj).setCalmStrategy();
-                    }
+                if (dis <= 150 && IsVisible == true) {
+                    ((CatTom) obj).setAggressiveStrategy();
+                } else if (dis > 150 && IsVisible == true) {
+                    ((CatTom) obj).setCalmStrategy();
                 }
             }
 
             if (obj instanceof IEatable && this != obj) {
                 if (dist(this.getX(), this.getY(),
-                        obj.getX(), obj.getY()) <= 16) {
+                        obj.getX(), obj.getY()) <= 50) {
                     this.add_score(((IEatable) obj).getScore());
                     this.setSpeed(getSpeed() + ((IEatable) obj).getSpeed());
                     ((IEatable) obj).eat();
-                    see_score(this);
+                    if (obj instanceof Big_cheese){
+                        count_cheese += 1;
+                    }
                     continue;
                 }
             }
 
             if (obj instanceof Hole) {
                 if (dist(this.getX(), this.getY(),
-                        obj.getX(), obj.getY()) <= 16) {
-                    if (this.score > 0) {
-                        see_score(this);
+                        obj.getX(), obj.getY()) <= 10) {
+                    if (this.count_cheese == 5) {
                         items.remove(this);
                         System.exit(0);
                         continue;
                     }
                 }
             }
+            if (obj instanceof BlackOil || obj instanceof Mousetrap) {
+                if (dist(this.getX(), this.getY(), obj.getX(), obj.getY()) <= 30) {
+                    isDead = true;
+                    Imove = false;
+                }
+            }
+
             if (obj instanceof Flower) {
                 if (dist(this.getX(), this.getY(),
                         obj.getX(), obj.getY()) <= 25) {
@@ -144,13 +141,14 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
             }
         }
 
-        cur++;
-        if (cur < speed)
-        {
-            return;
+        if (Imove) {
+            cur++;
+            if (cur < speed) {
+                return;
+            }
+            cur = 0;
+            update(items);
         }
-        cur = 0;
-        update(items);
     }
 
 
@@ -211,7 +209,12 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
 
     public void draw(GraphicsContext gc) {
         if (isEaten == false && IsVisible == true) {
-            gc.drawImage(picture, getX() - 12, getY() - 12);
+            gc.drawImage(picture, getX() - 18, getY() - 22);
+        }
+        if (isDead)
+        {
+            this.picture = new Image("/images/mouse/mouse_(.png");
+            gc.drawImage(picture, getX() - 18, getY() - 22);
         }
     }
 
@@ -222,8 +225,9 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
     public void set_keypr(KeyProccessing k){ kp = k;}
 
 
-    public void see_score(MouseJerry mi){
-        if (mi.getScore() == 150) {
+    public int see_cheese(MouseJerry mi){
+        return count_cheese;
+        /*if (mi.getScore() == 150) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Congratulations!!!");
             alert.setHeaderText("Congratulations!!!");
@@ -238,8 +242,7 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
             }));
             idl.setCycleCount(1);
             idl.play();
-            alert.show();
-        }
+            alert.show();*/
     }
 
     @Override

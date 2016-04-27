@@ -1,9 +1,11 @@
 package sample;
 
+import java.io.Serializable;
+
 /**
  * Created by katrin on 4/10/16.
  */
-public class Position {
+public class Position implements Serializable{
     private int x;
     private int y;
 
@@ -24,5 +26,17 @@ public class Position {
     public int getY()
     {
         return y;
+    }
+
+    public Position()
+    {
+        setX(0);
+        setY(0);
+    }
+
+    public Position(int x, int y)
+    {
+        setX(x);
+        setY(y);
     }
 }

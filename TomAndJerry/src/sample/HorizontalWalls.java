@@ -23,15 +23,15 @@ public class HorizontalWalls  extends DrawItems implements Serializable, IBarrie
     public HorizontalWalls(int x, int y, int len){
         setX(x);
         setY(y);
-        corner_x = x + 22 * len;
-        corner_y = y + 22;
+        corner_x = x + 40 * len;
+        corner_y = y + 40;
         length = len;
     }
 
     public void draw(GraphicsContext gc) {
-        picture = new Image("images/wall.png");
+        picture = new Image("images/wall_no.png");
         for (int i = 0; i < length; i++){
-            gc.drawImage(picture, getX() + 22 * i, getY() );
+            gc.drawImage(picture, getX() + 40 * i, getY() );
         }
     }
 }

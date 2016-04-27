@@ -11,26 +11,12 @@ import java.io.Serializable;
 public class Cheese extends DrawItems implements Serializable, IEatable{
 
     public static final int changeSpeed = -1;
-    private static Image image_of_cheese;
-    public static int score = 50;
 
-    private boolean IsEaten;
-
-    public Cheese(int x,int  y)
-    {
-        setX(x);
-        setY(y);
-
-        image_of_cheese = new Image("images/cheese.png");
-        IsEaten = false;
-    }
+    public int score;
+    public boolean IsEaten;
 
     public void draw(GraphicsContext gc)
     {
-        if(IsEaten == false)
-        {
-            gc.drawImage(image_of_cheese, getX() - 16, getY() - 16);
-        }
     }
 
     @Override
@@ -53,5 +39,4 @@ public class Cheese extends DrawItems implements Serializable, IEatable{
     public void eat() {
         IsEaten = true;
     }
-
 }

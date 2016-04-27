@@ -1,11 +1,67 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.canvas.Canvas?>
-<?import javafx.scene.control.Button?>
-<GridPane fx:controller="sample.House"
-          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
-    <Canvas fx:id="canvas" width="1366" height="768" />
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 
-</GridPane>
+<Pane fx:controller="sample.House"
+      xmlns:fx="http://javafx.com/fxml">
+    <Canvas fx:id="canvas" width="1366" height="768" />
+    <GridPane minWidth="1366" style="-fx-background-color: rgb(71, 255, 235, 0.5);">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="5"/>
+            <ColumnConstraints percentWidth="10"/>
+            <ColumnConstraints percentWidth="30"/>
+            <ColumnConstraints percentWidth="30"/>
+            <ColumnConstraints percentWidth="30"/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints/>
+        </rowConstraints>
+        <ImageView fx:id="pause" GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <Image url="/images/pause.png"/>
+        </ImageView>
+        <Label fx:id="fps_label" GridPane.columnIndex="1" GridPane.rowIndex="0" textFill="darkmagenta">
+            <font>
+               <Font name="Arial" size="25" />
+            </font>
+        </Label>
+        <Label fx:id="score_l"  GridPane.columnIndex="2" GridPane.rowIndex="0" text="Score: " textFill="#ff6519">
+            <font>
+                <Font name="DisneyPark" size = "70.0"/>
+            </font>
+        </Label>
+        <Label fx:id="count_cheese" GridPane.columnIndex="3" GridPane.rowIndex="0" text="Cheese: " textFill="#ff6519">
+            <font>
+                <Font name="DisneyPark" size="70.0"/>
+            </font>
+        </Label>
+        <Label fx:id="time_l" GridPane.columnIndex="4" GridPane.rowIndex="0" text ="Time: " textFill="#ff6519">
+            <font>
+                <Font name="DisneyPark" size="70.0"/>
+            </font>
+        </Label>
+    </GridPane>
+    <GridPane fx:id="control_p" layoutX="500" layoutY="400" minWidth="300" minHeight="100" style="-fx-background-color: rgb(71, 255, 235, 0.4);" visible="false">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="50"/>
+            <ColumnConstraints percentWidth="50"/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints/>
+        </rowConstraints>
+        <ImageView fx:id="play" GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <Image url="/images/play.png"/>
+        </ImageView>
+        <ImageView fx:id="restart" GridPane.columnIndex="1" GridPane.rowIndex="0">
+            <Image url="/images/restart.png"/>
+        </ImageView>
+    </GridPane>
+</Pane>
 
 
 

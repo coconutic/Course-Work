@@ -1,13 +1,10 @@
 package sample;
 
-import CatStrategies.CalmStrategy;
-import CatStrategies.FearStrategy;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Created by katrin on 3/3/16.
@@ -28,7 +25,7 @@ public class CatTom extends DrawItems implements IMoveble, Serializable, IEnemy{
 
     public CatTom(int x, int y)
     {
-        cat = new Image("images/cat.png");
+        cat = new Image("images/cat/cat_left.png");
         setX(x);
         setY(y);
         setCalmStrategy();
@@ -61,11 +58,6 @@ public class CatTom extends DrawItems implements IMoveble, Serializable, IEnemy{
         }
     }
 
-    public void setFearStrategy() {
-        if (!(strategy instanceof CatStrategies.FearStrategy)) {
-            strategy = new CatStrategies.FearStrategy();
-        }
-    }
 
     public void setAggressiveStrategy() {
         if (!(strategy instanceof CatStrategies.AggressiveStrategy)) {
@@ -110,6 +102,6 @@ public class CatTom extends DrawItems implements IMoveble, Serializable, IEnemy{
 
 
     public void draw(GraphicsContext gc)  {
-        gc.drawImage(cat, getX() - 8, getY() - 20);
+        gc.drawImage(cat, getX() - 43, getY() - 46);
     }
 }
