@@ -20,7 +20,7 @@ import java.util.*;
 public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEatable {
     private int speed;
     private int count_cheese;
-
+    public long life_time;
     private static Image picture;
 
     private KeyProccessing kp;
@@ -48,6 +48,7 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
 
     public MouseJerry(int x, int y, KeyProccessing t)
     {
+        life_time = 160;
         picture = new Image("/images/mouse/mouse_right.png");
 
         setX(x);

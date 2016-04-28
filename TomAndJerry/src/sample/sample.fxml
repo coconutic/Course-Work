@@ -61,6 +61,11 @@
             <Image url="/images/restart.png"/>
         </ImageView>
     </GridPane>
+    <Label fx:id="game_over" text="the end" layoutY="300" layoutX="500" visible="false">
+        <font>
+            <Font name="DisneyPark" size="150.0" />
+        </font>
+    </Label>
 </Pane>
 
 

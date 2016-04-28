@@ -22,10 +22,21 @@ public class CatTom extends DrawItems implements IMoveble, Serializable, IEnemy{
     private transient static int y_vc = 600;
 
     private static CatStrategies.Strategy strategy;
+    private int lastpos;
+
+    public int getLastpos()
+    {
+        return lastpos;
+    }
+    public  void setLastpos(int value)
+    {
+        lastpos = value;
+    }
 
     public CatTom(int x, int y)
     {
         cat = new Image("images/cat/cat_left.png");
+        lastpos = 0;
         setX(x);
         setY(y);
         setCalmStrategy();

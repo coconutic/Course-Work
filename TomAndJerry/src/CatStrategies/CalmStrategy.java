@@ -1,9 +1,11 @@
 package CatStrategies;
 
+import sample.CatTom;
 import sample.DrawItems;
 import sample.Position;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by katrin on 4/6/16.
@@ -11,15 +13,21 @@ import java.util.ArrayList;
 public class CalmStrategy implements Strategy {
 
     private boolean Move;
+    private boolean IsGo;
+
     private ArrayList<Position> pos;
+    private ArrayList<Position> wayback;
+
     private int way;
     private int lastpos;
 
     public CalmStrategy(){
         Move = true;
+        IsGo = false;
         way = 0;
         lastpos = 0;
         pos = new ArrayList<Position>();
+        wayback = new ArrayList<Position>();
 
         pos.add(new Position(200, 620));
         pos.add(new Position(1100, 622));
@@ -62,10 +70,43 @@ public class CalmStrategy implements Strategy {
         return -1;
     }
 
+    public void create_way(sample.CatTom cat, ArrayList<sample.DrawItems> items)
+    {
+        int curX = cat.getX();
+        int curY = cat.getY();
+
+
+    }
+
+    public void go_path(sample.CatTom cat)
+    {
+        int curX = cat.getX();
+        int curY = cat.getY();
+
+        for (int i = 0; i < wayback.size(); i++)
+        {
+            int posX = wayback.get(i).getX();
+            int posY = wayback.get(i).getY();
+
+            if (curX == posX && curY == posY){
+                //cat.setX();
+            }
+        }
+    }
+    public void go_back(sample.CatTom cat, ArrayList<sample.DrawItems> items)
+    {
+        if (wayback.size() == 0){
+            create_way(cat, items);
+        }
+        go_path(cat);
+    }
+
     @Override
     public void Action(sample.CatTom cat, ArrayList<sample.DrawItems> items) {
         int goalx;
         int goaly;
+        IsGo = false;
+        lastpos = cat.getLastpos();
 
         int x = cat.getX();
         int y = cat.getY();
@@ -100,12 +141,12 @@ public class CalmStrategy implements Strategy {
             }
         int newX = x + dx[g_index];
         int newY = y + dy[g_index];
-        /*
-        System.out.println(String.format("%d %d %d", pos.get(lastpos).getX(), newX, pos.get(poss).getX()));
+
+    /*  System.out.println(String.format("%d %d %d", pos.get(lastpos).getX(), newX, pos.get(poss).getX()));
         System.out.println(String.format("%d %d %d", pos.get(lastpos).getY(), newY, pos.get(poss).getY()));
         System.out.println(String.format("%d %d", goalx, goaly));
         System.out.println(Move);
-        */
+*/
         int x1 = pos.get(lastpos).getX();
         int y1 = pos.get(lastpos).getY();
         int x2 = pos.get(poss).getX();
@@ -125,28 +166,30 @@ public class CalmStrategy implements Strategy {
         if ((x1 <= newX && newX <= x2) &&
                 y1 <= newY && newY <= y2 &&
                 (newX != goalx || newY != goaly)) {
+            IsGo = true;
             cat.setX(newX);
             cat.setY(newY);
-        } else
-        {
-            if (!Move)
-            {
+        } else {
+            if (!Move) {
                 lastpos--;
-            } else
-            {
+            } else {
                 lastpos++;
             }
 
-            if (lastpos <= 0)
-            {
+            if (lastpos <= 0) {
                 Move = true;
                 lastpos++;
             }
 
-            if (lastpos == pos.size() - 1){
+            if (lastpos == pos.size() - 1) {
                 Move = false;
                 lastpos--;
             }
+        }
+        cat.setLastpos(lastpos);
+        if (!IsGo)
+        {
+            go_back(cat, items);
         }
     }
 }
