@@ -28,11 +28,18 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
     private boolean isEaten;
     private boolean IsVisible;
     private boolean Imove;
-    private boolean isDead;
+    public boolean isDead;
 
     private int cur = 0;
     private int score;
 
+    public void setPicture(int index) {
+        if (index == 1) {
+            picture = new Image("/images/mouse/mouse_right.png");
+        } else {
+            picture = new Image("/images/mouse/mouse_(.png");
+        }
+    }
     public void setSpeed(int value)
     {
         speed = value;
@@ -48,8 +55,8 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
 
     public MouseJerry(int x, int y, KeyProccessing t)
     {
-        life_time = 160;
-        picture = new Image("/images/mouse/mouse_right.png");
+        life_time = 30;
+        setPicture(1);
 
         setX(x);
         setY(y);
@@ -90,6 +97,7 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
                         obj.getX(), obj.getY());
                 if (dis <= 16 && IsVisible == true) {
                     this.eat();
+                    this.isDead = true;
                     this.Imove = false;
                     continue;
                 } else
@@ -209,12 +217,12 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
     }
 
     public void draw(GraphicsContext gc) {
-        if (isEaten == false && IsVisible == true) {
+        if (IsVisible == true) {
             gc.drawImage(picture, getX() - 18, getY() - 22);
         }
         if (isDead)
         {
-            this.picture = new Image("/images/mouse/mouse_(.png");
+            this.setPicture(2);
             gc.drawImage(picture, getX() - 18, getY() - 22);
         }
     }
@@ -228,22 +236,6 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
 
     public int see_cheese(MouseJerry mi){
         return count_cheese;
-        /*if (mi.getScore() == 150) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Congratulations!!!");
-            alert.setHeaderText("Congratulations!!!");
-            String s = "YOU ARE WIN!";
-            alert.setContentText(s);
-            Timeline idl = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<javafx.event.ActionEvent>() {
-                @Override
-                public void handle(javafx.event.ActionEvent event) {
-                    alert.setResult(ButtonType.CANCEL);
-                    alert.hide();
-                }
-            }));
-            idl.setCycleCount(1);
-            idl.play();
-            alert.show();*/
     }
 
     @Override

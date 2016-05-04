@@ -12,16 +12,14 @@ import java.util.ArrayList;
 public class CatTom extends DrawItems implements IMoveble, Serializable, IEnemy{
 
     private static Image cat;
+    private static CatStrategies.Strategy strategy;
 
     private transient static int[] dx = {4, 4};
     private transient static int[] dy = { -4, 0};
 
-    //private  coordinates;
-
     private transient static int x_vc = 270;
     private transient static int y_vc = 600;
 
-    private static CatStrategies.Strategy strategy;
     private int lastpos;
 
     public int getLastpos()
@@ -37,6 +35,7 @@ public class CatTom extends DrawItems implements IMoveble, Serializable, IEnemy{
     {
         cat = new Image("images/cat/cat_left.png");
         lastpos = 0;
+
         setX(x);
         setY(y);
         setCalmStrategy();
@@ -46,7 +45,7 @@ public class CatTom extends DrawItems implements IMoveble, Serializable, IEnemy{
 
     public void signal(MouseJerry jer)
     {
-        int distance = dist(getX(), getY(), jer.getX(), jer.getY());
+        double distance = dist(getX(), getY(), jer.getX(), jer.getY());
 
         if( distance <= 10 )
         {
@@ -57,9 +56,9 @@ public class CatTom extends DrawItems implements IMoveble, Serializable, IEnemy{
         }
     }
 
-    public int dist(int x1, int y1, int x2, int y2)
+    public double dist(int x1, int y1, int x2, int y2)
     {
-        return (int)Math.sqrt((double)((x1 - x2) * (x1 - x2)  + (y1 - y2) * (y1 - y2))); 
+        return Math.sqrt((double)((x1 - x2) * (x1 - x2)  + (y1 - y2) * (y1 - y2)));
     }
 
 
@@ -76,12 +75,41 @@ public class CatTom extends DrawItems implements IMoveble, Serializable, IEnemy{
         }
     }
 
-        public void tryStep(int newx, int newy, ArrayList<DrawItems> items){
+    public boolean isFree(int newx, int newy, ArrayList<DrawItems> items) {
 
         boolean canMove = true;
 
         int dx[] = {-8, 8, -8, 8};
         int dy[] = {-20, 20, 20, -20};
+
+        for (DrawItems i : items){
+            if ( i instanceof IBarrier) {
+                int x1 = i.getX();
+                int y1 = i.getY();
+                int x2 = ((IBarrier) i).getCornerX();
+                int y2 = ((IBarrier) i).getCornerY();
+
+                for (int j = 0; j < 4; j++) {
+                    int curx = dx[j] + newx;
+                    int cury = dy[j] + newy;
+                    if (x1 <= curx && curx <= x2 &&
+                            y1 <= cury && cury <= y2) {
+                        canMove = false;
+                    }
+                }
+            }
+        }
+
+        return canMove;
+    }
+
+
+    public void tryStep(int newx, int newy, ArrayList<DrawItems> items){
+
+        boolean canMove = true;
+
+        int dx[] = {-30, 30, -30, 30};
+        int dy[] = {-35, 35, 35, -35};
 
         for (DrawItems i : items){
             if ( i instanceof IBarrier) {

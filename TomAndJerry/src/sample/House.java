@@ -1,4 +1,5 @@
 package sample;
+//http://pastebin.com/K1kWwgke - 1Level
 
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
@@ -24,6 +25,7 @@ import java.util.*;
 public class House implements Serializable {
     public static Image t;
 
+    private boolean game_stopped = false;
     public KeyProccessing k;
     public ArrayList<DrawItems> items;
     public GraphicsContext gc;
@@ -34,6 +36,7 @@ public class House implements Serializable {
     public Label time_l;
     public Label fps_label;
     public Label game_over;
+    public Label win;
 
     public ImageView pause;
     public ImageView play;
@@ -46,7 +49,6 @@ public class House implements Serializable {
     private long prevFpsNano = 0;
 
     private SimpleDateFormat sdf;
-    private Timer timer;
     private Date curLevelTime;
     private Date finishLevelTime;
 
@@ -76,7 +78,13 @@ public class House implements Serializable {
         count_cheese.setText(String.format("Cheese: %d", m.see_cheese(m)));
     }
 
-    private boolean game_stopped = false;
+    private void show_lWin() {
+        game_over.setVisible(true);
+        canvas.setOpacity(0.8);
+        game_stopped = true;
+    }
+
+
 
     private void stop_pressed(KeyProccessing k)
     {
@@ -110,7 +118,7 @@ public class House implements Serializable {
 
         items.add(new BlackOil(640, 120));
         items.add(new BlackOil(110, 400));
-        items.add(new BlackOil(550, 300));
+        items.add(new BlackOil(450, 300));
         items.add(new BlackOil(1203, 512));
 
         items.add(new Hole(1150, 100));
@@ -120,9 +128,11 @@ public class House implements Serializable {
 
         items.add(new Mousetrap(600, 600));
         items.add(new MouseJerry(100, 150, k));
+
         curLevelTime = Calendar.getInstance().getTime();
         long level_time = ((MouseJerry) items.get(items.size() - 1)).life_time;
         finishLevelTime = new Date(Calendar.getInstance().getTime().getTime() + level_time * 1000);
+
         items.add(new CatTom(200, 620));
 
         items.add(new VerticalWAlls(210, 210, 7));
@@ -153,6 +163,7 @@ public class House implements Serializable {
         play.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event) {
+                canvas.setOpacity(0.7);
                 game_over.setVisible(false);
                 control_p.setVisible(false);
                 game_stopped = game_stopped ^ true;
@@ -163,6 +174,8 @@ public class House implements Serializable {
             @Override
             public void handle(MouseEvent event) {
                 try {
+                    canvas.setOpacity(1);
+                    win.setVisible(false);
                     game_over.setVisible(false);
                     load();
                     game_stopped = game_stopped ^true;
@@ -199,6 +212,11 @@ public class House implements Serializable {
 
                         if (current instanceof IMoveble) {
                             ((IMoveble) current).Move(items);
+                        }
+                        if (current instanceof MouseJerry) {
+                            if (((MouseJerry) current).isDead == true) {
+                                show_lWin();
+                            }
                         }
                     }
 
@@ -278,8 +296,10 @@ public class House implements Serializable {
         for (Object i : items){
             if( i instanceof MouseJerry){
                 ((MouseJerry) i).set_keypr(k);
+                ((MouseJerry) i).setPicture(1);
                     curLevelTime = Calendar.getInstance().getTime();
-                    finishLevelTime = new Date(Calendar.getInstance().getTime().getTime() + ((MouseJerry) i).life_time * 1000);
+                    finishLevelTime = new Date(Calendar.getInstance().getTime().getTime()
+                            + ((MouseJerry) i).life_time * 1000);
                 break;
             }
         }

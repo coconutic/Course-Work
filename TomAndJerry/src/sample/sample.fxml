@@ -9,7 +9,7 @@
 <?import javafx.scene.image.Image?>
 
 <Pane fx:controller="sample.House"
-      xmlns:fx="http://javafx.com/fxml">
+      xmlns:fx="http://javafx.com/fxml" >
     <Canvas fx:id="canvas" width="1366" height="768" />
     <GridPane minWidth="1366" style="-fx-background-color: rgb(71, 255, 235, 0.5);">
         <columnConstraints>
@@ -61,9 +61,14 @@
             <Image url="/images/restart.png"/>
         </ImageView>
     </GridPane>
-    <Label fx:id="game_over" text="the end" layoutY="300" layoutX="500" visible="false">
+    <Label fx:id="game_over" text="the end" layoutY="200" layoutX="500" visible="false">
         <font>
-            <Font name="DisneyPark" size="150.0" />
+            <Font name="DisneyPark" size="170.0" />
+        </font>
+    </Label>
+    <Label fx:id="win" text="You are win!!!" layoutX="200" layoutY="500" textFill="#d00512" visible="false">
+        <font>
+            <Font name="DisneyPark" size="170.0"/>
         </font>
     </Label>
 </Pane>
