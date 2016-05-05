@@ -26,8 +26,10 @@
         <entry file="file://$PROJECT_DIR$/src/sample/House_try.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="10" column="33" selection-start-line="10" selection-start-column="33" selection-end-line="10" selection-end-column="33" />
-              <folding />
+              <caret line="241" column="62" selection-start-line="241" selection-start-column="62" selection-end-line="241" selection-end-column="62" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -35,38 +37,17 @@
       <file leaf-file-name="House.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/sample/House.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.079822615">
-              <caret line="2" column="38" selection-start-line="2" selection-start-column="38" selection-end-line="2" selection-end-column="38" />
+            <state vertical-scroll-proportion="1.1596452">
+              <caret line="369" column="57" selection-start-line="369" selection-start-column="57" selection-end-line="369" selection-end-column="57" />
               <folding>
-                <element signature="method#show_timeD#0;class#House#0" expanded="false" />
                 <element signature="method#show_fps#0;class#House#0" expanded="false" />
                 <element signature="method#show_score_l#0;class#House#0" expanded="false" />
                 <element signature="method#show_lD#0;class#House#0" expanded="false" />
                 <element signature="method#show_lWin#0;class#House#0" expanded="false" />
                 <element signature="method#stop_pressed#0;class#House#0" expanded="false" />
-                <element signature="e#11484#11485#0" expanded="true" />
-                <element signature="e#11564#11565#0" expanded="true" />
+                <element signature="e#12086#12087#0" expanded="true" />
+                <element signature="e#12166#12167#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CalmStrategy.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/CatStrategies/CalmStrategy.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="49" column="43" selection-start-line="49" selection-start-column="43" selection-end-line="49" selection-end-column="43" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/sample/Main.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="18" column="18" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -91,7 +72,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/sample/Clock.java" />
         <option value="$PROJECT_DIR$/src/sample/Hole.java" />
         <option value="$PROJECT_DIR$/src/sample/VacumCleaner.java" />
         <option value="$PROJECT_DIR$/out.txt" />
@@ -111,11 +91,12 @@
         <option value="$PROJECT_DIR$/src/sample/HorizontalWalls.java" />
         <option value="$PROJECT_DIR$/src/sample/VerticalWAlls.java" />
         <option value="$PROJECT_DIR$/src/sample/CatTom.java" />
-        <option value="$PROJECT_DIR$/src/sample/MouseJerry.java" />
         <option value="$PROJECT_DIR$/src/sample/sample.fxml" />
-        <option value="$PROJECT_DIR$/src/sample/House_try.java" />
         <option value="$PROJECT_DIR$/src/sample/Main.java" />
         <option value="$PROJECT_DIR$/src/CatStrategies/CalmStrategy.java" />
+        <option value="$PROJECT_DIR$/src/sample/Clock.java" />
+        <option value="$PROJECT_DIR$/src/sample/MouseJerry.java" />
+        <option value="$PROJECT_DIR$/src/sample/House_try.java" />
         <option value="$PROJECT_DIR$/src/sample/House.java" />
       </list>
     </option>
@@ -197,24 +178,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TomAndJerry" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TomAndJerry" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CatStrategies" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -652,13 +615,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/Clock.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.8191489">
-          <caret line="49" column="41" selection-start-line="49" selection-start-column="41" selection-end-line="49" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/Hole.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -736,13 +692,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.094339624">
           <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/Flower.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.1320754">
-          <caret line="35" column="64" selection-start-line="35" selection-start-column="64" selection-end-line="35" selection-end-column="64" />
         </state>
       </provider>
     </entry>
@@ -847,6 +796,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="28" column="43" selection-start-line="28" selection-start-column="43" selection-end-line="28" selection-end-column="43" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -862,14 +814,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="31" column="43" selection-start-line="31" selection-start-column="43" selection-end-line="31" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/MouseJerry.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="131" column="29" selection-start-line="131" selection-start-column="29" selection-end-line="131" selection-end-column="29" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -900,14 +844,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/CatStrategies/CalmStrategy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="49" column="43" selection-start-line="49" selection-start-column="43" selection-end-line="49" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -916,27 +852,69 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/CatStrategies/CalmStrategy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.28159645">
+          <caret line="260" column="31" selection-start-line="260" selection-start-column="31" selection-end-line="260" selection-end-column="31" />
+          <folding>
+            <element signature="e#3798#3825#0" expanded="false" />
+            <element signature="e#3882#3902#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/Clock.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="44" selection-start-line="11" selection-start-column="44" selection-end-line="11" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/Flower.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.0">
+          <caret line="35" column="64" selection-start-line="35" selection-start-column="64" selection-end-line="35" selection-end-column="64" />
+          <folding>
+            <element signature="e#804#805#0" expanded="true" />
+            <element signature="e#877#878#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/House_try.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="33" selection-start-line="10" selection-start-column="33" selection-end-line="10" selection-end-column="33" />
-          <folding />
+          <caret line="241" column="62" selection-start-line="241" selection-start-column="62" selection-end-line="241" selection-end-column="62" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/MouseJerry.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.1995566">
+          <caret line="117" column="50" selection-start-line="117" selection-start-column="50" selection-end-line="117" selection-end-column="50" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="docComment;class#MouseJerry#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/House.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.079822615">
-          <caret line="2" column="38" selection-start-line="2" selection-start-column="38" selection-end-line="2" selection-end-column="38" />
+        <state vertical-scroll-proportion="1.1596452">
+          <caret line="369" column="57" selection-start-line="369" selection-start-column="57" selection-end-line="369" selection-end-column="57" />
           <folding>
-            <element signature="method#show_timeD#0;class#House#0" expanded="false" />
             <element signature="method#show_fps#0;class#House#0" expanded="false" />
             <element signature="method#show_score_l#0;class#House#0" expanded="false" />
             <element signature="method#show_lD#0;class#House#0" expanded="false" />
             <element signature="method#show_lWin#0;class#House#0" expanded="false" />
             <element signature="method#stop_pressed#0;class#House#0" expanded="false" />
-            <element signature="e#11484#11485#0" expanded="true" />
-            <element signature="e#11564#11565#0" expanded="true" />
+            <element signature="e#12086#12087#0" expanded="true" />
+            <element signature="e#12166#12167#0" expanded="true" />
           </folding>
         </state>
       </provider>

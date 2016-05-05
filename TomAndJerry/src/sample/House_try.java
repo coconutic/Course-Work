@@ -223,7 +223,7 @@ public class House_try implements Serializable {
                             ((IMoveble) current).Move(items);
                         }
                         if (current instanceof MouseJerry) {
-                            if (((MouseJerry) current).isDead == true) {
+                            if (((MouseJerry) current).isDead) {
                                 show_lD();
                             }
                             if (((MouseJerry) current).getEnd()){
@@ -239,7 +239,7 @@ public class House_try implements Serializable {
                         DrawItems current = it.next();
 
                         if (current instanceof IEatable) {
-                            if (((IEatable) current).isEaten() == true) {
+                            if (((IEatable) current).isEaten()) {
                                 it.remove();
                             }
                         }

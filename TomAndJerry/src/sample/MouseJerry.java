@@ -1,16 +1,8 @@
 package sample;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.event.EventHandler;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-import javafx.util.Duration;
-
-import java.awt.event.ActionEvent;
 import java.io.Serializable;
 import java.util.*;
 
@@ -30,6 +22,7 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
     private boolean Imove;
     private boolean end;
     public boolean isDead;
+    public boolean isLife_timeChanges;
 
     private int cur = 0;
     private int score;
@@ -46,14 +39,13 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
         speed = value;
         speed = Math.max(0, speed);
     }
+
     public int getSpeed() {
         return speed;
     }
-
-    public boolean getEnd() {return  end;}
-    public int getScore(){return score;}
-
-    public int getCount_cheese(){ return count_cheese; }
+    public boolean getEnd() { return  end; }
+    public int getScore(){ return score; }
+    public boolean isLife_timeChanges() { return isLife_timeChanges; }
 
     public MouseJerry(int x, int y, KeyProccessing t)
     {
@@ -69,6 +61,7 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
         score = 0;
 
         isEaten = false;
+        isLife_timeChanges = false;
         IsVisible = true;
         Imove = true;
         isDead = false;
@@ -98,17 +91,16 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
             if (obj instanceof CatTom) {
                 float dis = dist(this.getX(), this.getY(),
                         obj.getX(), obj.getY());
-                if (dis <= 16 && IsVisible == true) {
+                if (dis <= 16 && IsVisible) {
                     this.eat();
                     this.isDead = true;
                     this.Imove = false;
                     continue;
-                } else
-                if (dis <= 150 && IsVisible == true) {
-                    ((CatTom) obj).setAggressiveStrategy();
-                } else if (dis > 150 && IsVisible == true) {
-                    ((CatTom) obj).setCalmStrategy();
-                }
+                } else if (dis <= 150 && IsVisible) {
+                            ((CatTom) obj).setAggressiveStrategy();
+                        } else if (dis > 150 && IsVisible) {
+                            ((CatTom) obj).setCalmStrategy();
+                        }
             }
 
             if (obj instanceof IEatable && this != obj) {
@@ -119,6 +111,11 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
                     ((IEatable) obj).eat();
                     if (obj instanceof Big_cheese){
                         count_cheese += 1;
+                    }
+                    if (obj instanceof Clock)
+                    {
+                        life_time += 15;
+                        isLife_timeChanges = true;
                     }
                     continue;
                 }
@@ -219,7 +216,7 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
     }
 
     public void draw(GraphicsContext gc) {
-        if (IsVisible == true) {
+        if (IsVisible) {
             gc.drawImage(picture, getX() - 18, getY() - 22);
         }
         if (isDead)

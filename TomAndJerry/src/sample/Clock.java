@@ -9,7 +9,7 @@ import java.io.Serializable;
  * Created by katrin on 3/21/16.
  */
 public class Clock extends DrawItems implements Serializable, IEatable{
-    private static final int changeSpeed = 3;
+    private static final int changeSpeed = 0;
     public static final int score = 0;
     private static Image image_of_clock;
 

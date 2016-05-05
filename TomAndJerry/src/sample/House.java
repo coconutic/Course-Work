@@ -47,6 +47,8 @@ public class House implements Serializable {
 
     private int fps = 0;
     private long prevFpsNano = 0;
+    private long level_time;
+    private long pause_time = 0;
 
     private SimpleDateFormat sdf;
     private Date curLevelTime;
@@ -132,11 +134,11 @@ public class House implements Serializable {
             items.add(new Flower(270, 100));
 
             items.add(new Mousetrap(600, 600));
-            items.add(new MouseJerry(100, 150, k));
 
-            curLevelTime = Calendar.getInstance().getTime();
-            long level_time = ((MouseJerry) items.get(items.size() - 1)).life_time;
+            MouseJerry mouse = new MouseJerry(100, 150, k);
+            level_time = mouse.life_time;
             finishLevelTime = new Date(Calendar.getInstance().getTime().getTime() + level_time * 1000);
+            items.add(mouse);
 
             CatTom cat = new CatTom(200, 620);
             cat.pos.add(new Position(200, 620));
@@ -181,11 +183,11 @@ public class House implements Serializable {
             items.add(new Flower(1228, 630));
 
             items.add(new Mousetrap(600, 600));
-            items.add(new MouseJerry(100, 600, k));
 
-            curLevelTime = Calendar.getInstance().getTime();
-            long level_time = ((MouseJerry) items.get(items.size() - 1)).life_time;
+            MouseJerry mouse = new MouseJerry(100, 600, k);
+            level_time = mouse.life_time;
             finishLevelTime = new Date(Calendar.getInstance().getTime().getTime() + level_time * 1000);
+            items.add(mouse);
 
             CatTom cat = new CatTom(1230, 50);
 
@@ -268,8 +270,16 @@ public class House implements Serializable {
         new AnimationTimer() {
             public void handle(long startNanoTime) {
                 make_map(gc);
-                curLevelTime = Calendar.getInstance().getTime();
-                long temp = show_timeD();
+                if (!game_stopped) {
+                    curLevelTime = Calendar.getInstance().getTime();
+                    long temp = show_timeD();
+                    if (temp == 0) {
+                        game_stopped = true;
+                        game_over.setVisible(true);
+                    }
+                } else {
+                pause_time += 1;
+                }
                 try {
                     check(k);
                 } catch (IOException e){
@@ -277,10 +287,6 @@ public class House implements Serializable {
 
                 stop_pressed(k);
 
-                if (temp == 0) {
-                    game_stopped = true;
-                    game_over.setVisible(true);
-                }
                 if (!game_stopped) {
                     Iterator<DrawItems> it = items.iterator();
                     while (it.hasNext()) {
@@ -290,13 +296,21 @@ public class House implements Serializable {
                             ((IMoveble) current).Move(items);
                         }
                         if (current instanceof MouseJerry) {
-                            if (((MouseJerry) current).isDead == true) {
+                            if (((MouseJerry) current).isDead) {
                                 show_lD();
                             }
                             if (((MouseJerry) current).getEnd()){
-                                //items.remove((MouseJerry) current);
                                 show_lWin();
                                 game_stopped = true;
+                            }
+                            if (pause_time != 0) {
+                                finishLevelTime = new Date(finishLevelTime.getTime() + pause_time * 1000 / 60);
+                                pause_time = 0;
+                            }
+                            if (((MouseJerry) current).isLife_timeChanges()) {
+                                finishLevelTime = new Date(Calendar.getInstance().getTime().getTime() +
+                                        ((MouseJerry) current).life_time * 1000);
+                                ((MouseJerry) current).isLife_timeChanges = false;
                             }
                         }
                     }
@@ -305,7 +319,7 @@ public class House implements Serializable {
                         DrawItems current = it.next();
 
                         if (current instanceof IEatable) {
-                            if (((IEatable) current).isEaten() == true) {
+                            if (((IEatable) current).isEaten()) {
                                 it.remove();
                             }
                         }
@@ -346,7 +360,7 @@ public class House implements Serializable {
                 break;
             }
             if(i == KeyCode.L){
-                load("out1.txt");
+                load("out2.txt");
                 break;
             }
         }

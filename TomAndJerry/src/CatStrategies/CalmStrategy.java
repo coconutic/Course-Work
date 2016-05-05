@@ -16,16 +16,9 @@ public class CalmStrategy implements Strategy {
     private static int dx[] = {-4, -4, -4, -4, -4, -4, -4, -4, -4, -3, -3, -3, -3, -3, -3, -3, -3, -3, -2, -2, -2, -2, -2, -2, -2, -2, -2, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4};
     private static int dy[] = {-4, -3, -2, -1, 0, 1, 2, 3, 4, -4, -3, -2, -1, 0, 1, 2, 3, 4, -4, -3, -2, -1, 0, 1, 2, 3, 4, -4, -3, -2, -1, 0, 1, 2, 3, 4, -4, -3, -2, -1, 0, 1, 2, 3, 4, -4, -3, -2, -1, 0, 1, 2, 3, 4, -4, -3, -2, -1, 0, 1, 2, 3, 4, -4, -3, -2, -1, 0, 1, 2, 3, 4, -4, -3, -2, -1, 0, 1, 2, 3, 4};
 
-/*
-    private static int dx[] = {-4, -4, -4, -4, -4, -4, -4, -4, -4, -3, -3, -3, -3, -3, -3, -3, -3, -3, -2, -2, -2, -2, -2, -2, -2, -2, -2, -1, -1,
-                               -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4};
-    private static int dy[] = {-4, -3, -2, -1, 0, 1, 2, 3, 4, -4, -3, -2, -1, 0, 1, 2, 3, 4, -4, -3, -2, -1, 0, 1, 2, 3, 4, -4, -3, -2, -1, 0, 1,
-                                2, 3, 4, -4, -3, -2, -1, 1, 2, 3, 4, -4, -3, -2, -1, 0, 1, 2, 3, 4, -4, -3, -2, -1, 0, 1, 2, 3, 4, -4, -3, -2, -1, 0, 1, 2, 3, 4, -4, -3, -2, -1, 0, 1, 2, 3, 4};
-*/
     private boolean Move;
     private boolean IsGo;
 
-  //  private ArrayList<Position> pos;
     private ArrayList<Position> wayback;
 
     private int way;
@@ -36,27 +29,7 @@ public class CalmStrategy implements Strategy {
         IsGo = false;
         way = 0;
         lastpos = 0;
-     //   cat.pos = new ArrayList<Position>();
         wayback = new ArrayList<Position>();
-/*
-        cat.pos.add(new Position(1230, 50));
-        cat.pos.add(new Position(1230, 600));
-        cat.pos.add(new Position(965, 600));
-        cat.pos.add(new Position(965, 125));
-        cat.pos.add(new Position(755,125));
-        cat.pos.add(new Position(755, 580));
-        cat.pos.add(new Position(500, 580));
-        cat.pos.add(new Position(500, 180));
-        cat.pos.add(new Position(250,180));
-        cat.pos.add(new Position(250, 520));/
-
-        cat.pos.add(new Position(200, 620));
-        cat.pos.add(new Position(1100, 620));
-        cat.pos.add(new Position(1100, 430));
-        cat.pos.add(new Position(330, 430));
-        cat.pos.add(new Position(330, 150));
-        cat.pos.add(new Position(210, 150));*/
-     //   pos.add(new Position(330, 155));
     }
 
     /*public int getPos(int curx, int cury){
