@@ -22,6 +22,7 @@ public class CatTom extends DrawItems implements IMoveble, Serializable, IEnemy{
 
     private int lastpos;
 
+    public ArrayList<Position> pos;
     public int getLastpos()
     {
         return lastpos;
@@ -33,6 +34,7 @@ public class CatTom extends DrawItems implements IMoveble, Serializable, IEnemy{
 
     public CatTom(int x, int y)
     {
+        pos = new ArrayList<Position>();
         cat = new Image("images/cat/cat_left.png");
         lastpos = 0;
 
@@ -64,7 +66,7 @@ public class CatTom extends DrawItems implements IMoveble, Serializable, IEnemy{
 
     public void setCalmStrategy() {
         if (!(strategy instanceof CatStrategies.CalmStrategy)) {
-            strategy = new CatStrategies.CalmStrategy();
+            strategy = new CatStrategies.CalmStrategy(this);
         }
     }
 

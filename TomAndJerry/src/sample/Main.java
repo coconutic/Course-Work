@@ -32,6 +32,20 @@ public class Main extends Application {
                 }
             }
         });
+
+        l.level2.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                System.out.println("in handler");
+                try{
+                    Parent root3 =  FXMLLoader.load(getClass().getResource("/sample/sample.fxml"));
+                    scene.setRoot(root3);
+                    System.out.println("yeyeye");
+                } catch (Exception e){
+                    System.out.println(e);
+                }
+            }
+        });
     }
 
 

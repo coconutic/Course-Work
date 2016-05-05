@@ -46,10 +46,11 @@
             </font>
         </Label>
     </GridPane>
-    <GridPane fx:id="control_p" layoutX="500" layoutY="400" minWidth="300" minHeight="100" style="-fx-background-color: rgb(71, 255, 235, 0.4);" visible="false">
+    <GridPane fx:id="control_p" layoutX="400" layoutY="400" minWidth="400" minHeight="100" style="-fx-background-color: rgb(71, 255, 235, 0.4);" visible="false">
         <columnConstraints>
-            <ColumnConstraints percentWidth="50"/>
-            <ColumnConstraints percentWidth="50"/>
+            <ColumnConstraints percentWidth="33"/>
+            <ColumnConstraints percentWidth="33"/>
+            <ColumnConstraints percentWidth="33"/>
         </columnConstraints>
         <rowConstraints>
             <RowConstraints/>
@@ -59,6 +60,9 @@
         </ImageView>
         <ImageView fx:id="restart" GridPane.columnIndex="1" GridPane.rowIndex="0">
             <Image url="/images/restart.png"/>
+        </ImageView>
+        <ImageView fx:id="close" GridPane.columnIndex="2" GridPane.rowIndex="0">
+            <Image url="/images/close.png"/>
         </ImageView>
     </GridPane>
     <Label fx:id="game_over" text="the end" layoutY="200" layoutX="500" visible="false">

@@ -1,28 +1,32 @@
 package sample;
+
+/**
+ * Created by katrin on 5/4/16.
+ */
 //http://pastebin.com/K1kWwgke - 1Level
 
-import javafx.animation.AnimationTimer;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
+        import javafx.animation.AnimationTimer;
+        import javafx.event.EventHandler;
+        import javafx.fxml.FXML;
+        import javafx.scene.canvas.Canvas;
+        import javafx.scene.canvas.GraphicsContext;
+        import javafx.scene.control.Label;
+        import javafx.scene.image.Image;
+        import javafx.scene.image.ImageView;
+        import javafx.scene.input.KeyCode;
+        import javafx.scene.input.MouseEvent;
+        import javafx.scene.layout.GridPane;
+        import javafx.scene.paint.Color;
 
 
-import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.*;
+        import java.io.*;
+        import java.text.SimpleDateFormat;
+        import java.util.*;
 
 /**
  * Created by katrin on 2/29/16.
  */
-public class House implements Serializable {
+public class House_try implements Serializable {
     public static Image t;
 
     private boolean game_stopped = false;
@@ -109,7 +113,7 @@ public class House implements Serializable {
 
         sdf = new SimpleDateFormat("HH:mm:ss");
 
-        t = new Image("/maps/lev1-1.jpg");
+        t = new Image("/maps/lev1-3.jpg");
         k = new KeyProccessing(canvas);
         items = new ArrayList<DrawItems>();
 
@@ -121,37 +125,33 @@ public class House implements Serializable {
         items.add(new Big_cheese(900, 100));
         items.add(new Big_cheese(1030, 620));
 
-        items.add(new BlackOil(640, 120));
         items.add(new BlackOil(110, 400));
         items.add(new BlackOil(450, 300));
         items.add(new BlackOil(1203, 512));
 
-        items.add(new Hole(1150, 100));
+        items.add(new Hole(700, 100));
         items.add(new Clock(1000, 200));
-        items.add(new Clock(220, 620));
         items.add(new Flower(270, 100));
+        items.add(new Flower(1228, 630));
 
         items.add(new Mousetrap(600, 600));
-        items.add(new MouseJerry(100, 150, k));
+        items.add(new MouseJerry(100, 600, k));
 
         curLevelTime = Calendar.getInstance().getTime();
         long level_time = ((MouseJerry) items.get(items.size() - 1)).life_time;
         finishLevelTime = new Date(Calendar.getInstance().getTime().getTime() + level_time * 1000);
 
-        items.add(new CatTom(200, 620));
+        items.add(new CatTom(1230, 60));
 
-        items.add(new VerticalWAlls(210, 210, 7));
-        items.add(new VerticalWAlls(770, 200, 5));
-        items.add(new VerticalWAlls(1080, 10, 10));
-        items.add(new VerticalWAlls(1095, 10, 10));
+        items.add(new VerticalWAlls(315, 255, 12));
+        items.add(new VerticalWAlls(582, 10, 12));
+        items.add(new VerticalWAlls(868, 230, 12));
+        items.add(new VerticalWAlls(1080, 10, 13));
+        items.add(new VerticalWAlls(1095, 10, 13));
         items.add(new VerticalWAlls(42, 10, 60));
         items.add(new VerticalWAlls(Constants.MAP_WIDTH - 110, 0 , 60));
 
 
-        items.add(new HorizontalWalls(220, 494, 14));
-        items.add(new HorizontalWalls(220, 470, 14));
-        items.add(new HorizontalWalls(370, 230, 10));
-        items.add(new HorizontalWalls(370, 190, 11));
         items.add(new HorizontalWalls(0, Constants.MAP_HEIGHT - 100, 62));
         items.add(new HorizontalWalls(0, 43, 62));
 
@@ -172,8 +172,6 @@ public class House implements Serializable {
                 canvas.setOpacity(1);
                 game_over.setVisible(false);
                 control_p.setVisible(false);
-                win.setVisible(false);
-
                 game_stopped = false;
             }
         });
@@ -193,12 +191,12 @@ public class House implements Serializable {
         });
 
         close.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                try {
-                    System.exit(0);
-                } catch (Exception e){ }
-            }
+           @Override
+           public void handle(MouseEvent event) {
+               try {
+                   System.exit(0);
+               } catch (Exception e){ }
+           }
         });
 
         //main loop
@@ -211,17 +209,13 @@ public class House implements Serializable {
                     check(k);
                 } catch (IOException e){
                 }
-
-                stop_pressed(k);
-
+                //stop_pressed(k);
                 if (temp == 0) {
                     game_stopped = true;
                     game_over.setVisible(true);
                 }
                 if (!game_stopped) {
-
                     Iterator<DrawItems> it = items.iterator();
-
                     while (it.hasNext()) {
                         DrawItems current = it.next();
 
@@ -233,15 +227,14 @@ public class House implements Serializable {
                                 show_lD();
                             }
                             if (((MouseJerry) current).getEnd()){
-                                //items.remove((MouseJerry) current);
+                                items.remove((MouseJerry) current);
                                 show_lWin();
                                 game_stopped = true;
+                                break;
                             }
                         }
                     }
-
                     it = items.iterator();
-
                     while (it.hasNext()) {
                         DrawItems current = it.next();
 
@@ -294,7 +287,7 @@ public class House implements Serializable {
     }
 
     public void save() throws IOException {
-        FileOutputStream fos = new FileOutputStream("out.txt");
+        FileOutputStream fos = new FileOutputStream("out2.txt");
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(items);
         oos.flush();
@@ -303,7 +296,7 @@ public class House implements Serializable {
     }
 
     public void load() throws IOException {
-        FileInputStream fis = new FileInputStream("out.txt");
+        FileInputStream fis = new FileInputStream("out2.txt");
         ObjectInputStream oin = new ObjectInputStream(fis);
         try{
             items = (ArrayList<DrawItems>) oin.readObject();
@@ -314,9 +307,9 @@ public class House implements Serializable {
             if( i instanceof MouseJerry){
                 ((MouseJerry) i).set_keypr(k);
                 ((MouseJerry) i).setPicture(1);
-                    curLevelTime = Calendar.getInstance().getTime();
-                    finishLevelTime = new Date(Calendar.getInstance().getTime().getTime()
-                            + ((MouseJerry) i).life_time * 1000);
+                curLevelTime = Calendar.getInstance().getTime();
+                finishLevelTime = new Date(Calendar.getInstance().getTime().getTime()
+                        + ((MouseJerry) i).life_time * 1000);
                 break;
             }
         }

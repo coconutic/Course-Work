@@ -28,6 +28,7 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
     private boolean isEaten;
     private boolean IsVisible;
     private boolean Imove;
+    private boolean end;
     public boolean isDead;
 
     private int cur = 0;
@@ -49,9 +50,10 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
         return speed;
     }
 
-
+    public boolean getEnd() {return  end;}
     public int getScore(){return score;}
 
+    public int getCount_cheese(){ return count_cheese; }
 
     public MouseJerry(int x, int y, KeyProccessing t)
     {
@@ -70,6 +72,7 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
         IsVisible = true;
         Imove = true;
         isDead = false;
+        end = false;
     }
 
 
@@ -125,9 +128,8 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
                 if (dist(this.getX(), this.getY(),
                         obj.getX(), obj.getY()) <= 10) {
                     if (this.count_cheese == 5) {
-                        items.remove(this);
-                        System.exit(0);
-                        continue;
+                        end = true;
+                        break;
                     }
                 }
             }

@@ -25,31 +25,42 @@ public class CalmStrategy implements Strategy {
     private boolean Move;
     private boolean IsGo;
 
-    private ArrayList<Position> pos;
+  //  private ArrayList<Position> pos;
     private ArrayList<Position> wayback;
 
     private int way;
     private int lastpos;
 
-    public CalmStrategy(){
+    public CalmStrategy(CatTom cat){
         Move = true;
         IsGo = false;
         way = 0;
         lastpos = 0;
-        pos = new ArrayList<Position>();
+        cat.pos = new ArrayList<Position>();
         wayback = new ArrayList<Position>();
+/*
+        cat.pos.add(new Position(1230, 50));
+        cat.pos.add(new Position(1230, 600));
+        cat.pos.add(new Position(965, 600));
+        cat.pos.add(new Position(965, 125));
+        cat.pos.add(new Position(755,125));
+        cat.pos.add(new Position(755, 580));
+        cat.pos.add(new Position(500, 580));
+        cat.pos.add(new Position(500, 180));
+        cat.pos.add(new Position(250,180));
+        cat.pos.add(new Position(250, 520));*/
 
-        pos.add(new Position(200, 620));
-        pos.add(new Position(1100, 620));
-        pos.add(new Position(1100, 430));
-        pos.add(new Position(330, 430));
-        pos.add(new Position(330, 150));
-        pos.add(new Position(210, 150));
+        cat.pos.add(new Position(200, 620));
+        cat.pos.add(new Position(1100, 620));
+        cat.pos.add(new Position(1100, 430));
+        cat.pos.add(new Position(330, 430));
+        cat.pos.add(new Position(330, 150));
+        cat.pos.add(new Position(210, 150));
      //   pos.add(new Position(330, 155));
     }
 
-    public int getPos(int curx, int cury){
-        for (int i = 0; i < pos.size() - 1; i++){
+    /*public int getPos(int curx, int cury){
+        for (int i = 0; i < cat.pos.size() - 1; i++){
             int x1 = pos.get(i).getX();
             int x2 = pos.get(i + 1).getX();
             int y1 = pos.get(i).getY(); int y2 = pos.get(i + 1).getY();
@@ -70,7 +81,7 @@ public class CalmStrategy implements Strategy {
             /*
             System.out.println(String.format("%d %d %d", x1, curx, x2));
              System.out.println(String.format("%d %d %d", y1, cury, y2));
-             */
+
             if ((x1 <= curx && curx <= x2) && (y1 <= cury && cury <= y2))
             {
                 return i + 1;
@@ -78,7 +89,7 @@ public class CalmStrategy implements Strategy {
         }
         return -1;
     }
-
+*/
     private double getDistToTheWay(Position pos1, Position pos2, Position cur_pos) {
         double A = pos1.getY() - pos2.getY();
         double B = pos2.getX() - pos1.getX();
@@ -91,18 +102,18 @@ public class CalmStrategy implements Strategy {
     private boolean isOnWay(Position cur_pos, sample.CatTom cat) {
         boolean f = false;
 
-        for (int i = 0; i < pos.size() - 1; i++) {
-            int x1 = Math.min(pos.get(i).getX(), pos.get(i + 1).getX());
-            int x2 = Math.max(pos.get(i).getX(), pos.get(i + 1).getX());
-            int y1 = Math.min(pos.get(i).getY(), pos.get(i + 1).getY());
-            int y2 = Math.max(pos.get(i).getY(), pos.get(i + 1).getY());
+        for (int i = 0; i < cat.pos.size() - 1; i++) {
+            int x1 = Math.min(cat.pos.get(i).getX(), cat.pos.get(i + 1).getX());
+            int x2 = Math.max(cat.pos.get(i).getX(), cat.pos.get(i + 1).getX());
+            int y1 = Math.min(cat.pos.get(i).getY(), cat.pos.get(i + 1).getY());
+            int y2 = Math.max(cat.pos.get(i).getY(), cat.pos.get(i + 1).getY());
 
-            if (getDistToTheWay(pos.get(i), pos.get(i + 1), cur_pos) <= 3 &&
+            if (getDistToTheWay(cat.pos.get(i), cat.pos.get(i + 1), cur_pos) <= 3 &&
                     x1 <= cur_pos.getX() && cur_pos.getX() <= x2 &&
                      y1 <= cur_pos.getY() && cur_pos.getY() <= y2) {
                 cat.setLastpos(i);
-                if (cat.getX() == pos.get(i + 1).getX() &&
-                        cat.getY() == pos.get(i + 1).getY()) {
+                if (cat.getX() == cat.pos.get(i + 1).getX() &&
+                        cat.getY() == cat.pos.get(i + 1).getY()) {
                     if (Move) {
                         cat.setLastpos(i + 1);              // CHECK IF POSS ENDS
                     }
@@ -152,11 +163,11 @@ public class CalmStrategy implements Strategy {
         q.clear();
 
         while (cur.getY() != -1) {
-            System.out.println(String.format("x: %d y: %d", cur.getX(), cur.getY()));
+    //        System.out.println(String.format("x: %d y: %d", cur.getX(), cur.getY()));
             wayback.add(cur);
             cur = history.get(cur);
         }
-    System.out.println("************************");
+  //  System.out.println("************************");
         for (int i = 0; i < wayback.size() / 2; i++) {
             Position temp = wayback.get(i);
             wayback.set(i, wayback.get(wayback.size() - i - 1));
@@ -222,26 +233,26 @@ public class CalmStrategy implements Strategy {
         int poss = lastpos + 1;
 
         if (!Move) {
-            goalx = pos.get(lastpos).getX();
-            goaly = pos.get(lastpos).getY();
+            goalx = cat.pos.get(lastpos).getX();
+            goaly = cat.pos.get(lastpos).getY();
         } else {
-            goalx = pos.get(poss).getX();
-            goaly = pos.get(poss).getY();
+            goalx = cat.pos.get(poss).getX();
+            goaly = cat.pos.get(poss).getY();
         }
 /*
         int subx = goalx - x;
         int suby = goaly - y;
-*/
+
         System.out.println(String.format("Last Pos = %d", lastpos));
         System.out.println(String.format("Poss = %d", poss));
-
+*/
         int index = 0;
         double minDist1 = 10000;
         double minDist2 = 10000;
 
-        System.out.println("DEBUG HERE==========================================");
-        System.out.println(String.format("I am here x = %d y = %d", x, y));
-        System.out.println(String.format("goalx = %d goalY = %d", goalx, goaly));
+ //       System.out.println("DEBUG HERE==========================================");
+   //     System.out.println(String.format("I am here x = %d y = %d", x, y));
+     //   System.out.println(String.format("goalx = %d goalY = %d", goalx, goaly));
         for (int i = 0; i < dx.length; i++) {
             int newX = x + dx[i];
             int newY = y + dy[i];
@@ -251,11 +262,11 @@ public class CalmStrategy implements Strategy {
             }
 */
             double dist1 = cat.dist(newX, newY, goalx, goaly);
-            double dist2 = getDistToTheWay(pos.get(lastpos), pos.get(poss), new Position(newX, newY));
+            double dist2 = getDistToTheWay(cat.pos.get(lastpos), cat.pos.get(poss), new Position(newX, newY));
 
             if (newX == 1100 && newY == 620) {
-                System.out.println(String.format("dist to point = %f", dist1));
-                System.out.println(String.format("dist to line = %f", dist2));
+               // System.out.println(String.format("dist to point = %f", dist1));
+                //System.out.println(String.format("dist to line = %f", dist2));
             }
 
             if (dist1 <= minDist1) {
@@ -265,12 +276,12 @@ public class CalmStrategy implements Strategy {
                 }
             }
 
-            System.out.println(String.format("After index = %d, newx = %d, newy = %d", i, newX, newY));
-            System.out.println(String.format("Dist to point = %f, index = %d", minDist1, index));
+            //System.out.println(String.format("After index = %d, newx = %d, newy = %d", i, newX, newY));
+            //System.out.println(String.format("Dist to point = %f, index = %d", minDist1, index));
         }
 
-        System.out.println("NODEBUG HERE==========================================");
-        System.out.println(minDist1);
+        //System.out.println("NODEBUG HERE==========================================");
+       // System.out.println(minDist1);
 
 //        System.out.println(dx[index]);
 //        System.out.println(dy[index]);
@@ -282,8 +293,8 @@ public class CalmStrategy implements Strategy {
 */
        /* System.out.println(subNewx);
         System.out.println(subNewy);
-        System.out.println("============================");*/
-        System.out.println(Move);
+        System.out.println("============================");
+        System.out.println(Move);*/
 /*
         if (subx * subNewx < 0 || suby * subNewy < 0 ||
                 (subx * subNewx == 0 && suby * subNewy == 0)) {
@@ -305,9 +316,9 @@ public class CalmStrategy implements Strategy {
         }
         */
 
-        if ((cat.getX() == pos.get(pos.size() - 1).getX() &&
-                cat.getY() == pos.get(pos.size() - 1).getY()) ||
-                (cat.getX() == pos.get(0).getX() && cat.getY() == pos.get(0).getY())) {
+        if ((cat.getX() == cat.pos.get(cat.pos.size() - 1).getX() &&
+                cat.getY() == cat.pos.get(cat.pos.size() - 1).getY()) ||
+                (cat.getX() == cat.pos.get(0).getX() && cat.getY() == cat.pos.get(0).getY())) {
             Move = Move ^ true;
         }
         cat.setLastpos(lastpos);
