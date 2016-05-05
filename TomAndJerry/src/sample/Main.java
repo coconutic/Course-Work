@@ -16,6 +16,8 @@ import java.io.IOException;
 
 public class Main extends Application {
 
+    public static boolean level1;
+
     public void go_to_level(FXMLLoader ld, Scene scene) throws IOException{
         Level l = (Level)ld.getController();
 
@@ -24,9 +26,10 @@ public class Main extends Application {
             public void handle(MouseEvent event) {
                 System.out.println("in handler");
                 try{
+                    level1 = true;
+
                     Parent root3 =  FXMLLoader.load(getClass().getResource("/sample/sample.fxml"));
                     scene.setRoot(root3);
-                    System.out.println("yeyeye");
                 } catch (Exception e){
                     System.out.println(e);
                 }
@@ -36,11 +39,11 @@ public class Main extends Application {
         l.level2.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.out.println("in handler");
                 try{
+                    level1 = false;
+
                     Parent root3 =  FXMLLoader.load(getClass().getResource("/sample/sample.fxml"));
                     scene.setRoot(root3);
-                    System.out.println("yeyeye");
                 } catch (Exception e){
                     System.out.println(e);
                 }
@@ -66,6 +69,8 @@ public class Main extends Application {
             @Override
             public void handle(MouseEvent event) {
                 try {
+                    level1 = true;
+
                     Parent root1 =  FXMLLoader.load(getClass().getResource("sample.fxml"));
                     scene.setRoot(root1);
                 } catch (Exception e){

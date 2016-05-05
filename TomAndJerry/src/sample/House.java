@@ -1,6 +1,6 @@
 package sample;
 //http://pastebin.com/K1kWwgke - 1Level
-
+//http://pastebin.com/gF6c96Bt - 2Level
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -13,7 +13,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -105,55 +104,114 @@ public class House implements Serializable {
 
     public void initialize()  throws IOException
     {
+        Main lv = new Main();
         canvas.setFocusTraversable(true);
-
         sdf = new SimpleDateFormat("HH:mm:ss");
-
-        t = new Image("/maps/lev1-1.jpg");
         k = new KeyProccessing(canvas);
         items = new ArrayList<DrawItems>();
 
-        items.add(new LittleChesse(400, 130));
-        items.add(new LittleChesse(185, 300));
-        items.add(new Big_cheese(680, 340));
-        items.add(new Big_cheese(100, 600));
-        items.add(new Big_cheese(1180, 300));
-        items.add(new Big_cheese(900, 100));
-        items.add(new Big_cheese(1030, 620));
+        if (lv.level1)
+        {
+            t = new Image("/maps/lev1-1.jpg");
+            items.add(new LittleChesse(400, 130));
+            items.add(new LittleChesse(185, 300));
+            items.add(new Big_cheese(680, 340));
+            items.add(new Big_cheese(100, 600));
+            items.add(new Big_cheese(1180, 300));
+            items.add(new Big_cheese(900, 100));
+            items.add(new Big_cheese(1030, 620));
 
-        items.add(new BlackOil(640, 120));
-        items.add(new BlackOil(110, 400));
-        items.add(new BlackOil(450, 300));
-        items.add(new BlackOil(1203, 512));
+            items.add(new BlackOil(640, 120));
+            items.add(new BlackOil(110, 400));
+            items.add(new BlackOil(450, 300));
+            items.add(new BlackOil(1203, 512));
 
-        items.add(new Hole(1150, 100));
-        items.add(new Clock(1000, 200));
-        items.add(new Clock(220, 620));
-        items.add(new Flower(270, 100));
+            items.add(new Hole(1150, 100));
+            items.add(new Clock(1000, 200));
+            items.add(new Clock(220, 620));
+            items.add(new Flower(270, 100));
 
-        items.add(new Mousetrap(600, 600));
-        items.add(new MouseJerry(100, 150, k));
+            items.add(new Mousetrap(600, 600));
+            items.add(new MouseJerry(100, 150, k));
 
-        curLevelTime = Calendar.getInstance().getTime();
-        long level_time = ((MouseJerry) items.get(items.size() - 1)).life_time;
-        finishLevelTime = new Date(Calendar.getInstance().getTime().getTime() + level_time * 1000);
+            curLevelTime = Calendar.getInstance().getTime();
+            long level_time = ((MouseJerry) items.get(items.size() - 1)).life_time;
+            finishLevelTime = new Date(Calendar.getInstance().getTime().getTime() + level_time * 1000);
 
-        items.add(new CatTom(200, 620));
+            CatTom cat = new CatTom(200, 620);
+            cat.pos.add(new Position(200, 620));
+            cat.pos.add(new Position(1100, 620));
+            cat.pos.add(new Position(1100, 430));
+            cat.pos.add(new Position(330, 430));
+            cat.pos.add(new Position(330, 150));
+            cat.pos.add(new Position(210, 150));
+            items.add(cat);
 
-        items.add(new VerticalWAlls(210, 210, 7));
-        items.add(new VerticalWAlls(770, 200, 5));
-        items.add(new VerticalWAlls(1080, 10, 10));
-        items.add(new VerticalWAlls(1095, 10, 10));
-        items.add(new VerticalWAlls(42, 10, 60));
-        items.add(new VerticalWAlls(Constants.MAP_WIDTH - 110, 0 , 60));
+            items.add(new VerticalWAlls(210, 210, 7));
+            items.add(new VerticalWAlls(770, 200, 5));
+            items.add(new VerticalWAlls(1080, 10, 10));
+            items.add(new VerticalWAlls(1095, 10, 10));
+            items.add(new VerticalWAlls(42, 10, 60));
+            items.add(new VerticalWAlls(Constants.MAP_WIDTH - 110, 0 , 60));
 
+            items.add(new HorizontalWalls(220, 494, 14));
+            items.add(new HorizontalWalls(220, 470, 14));
+            items.add(new HorizontalWalls(370, 230, 10));
+            items.add(new HorizontalWalls(370, 190, 11));
+            items.add(new HorizontalWalls(0, Constants.MAP_HEIGHT - 100, 62));
+            items.add(new HorizontalWalls(0, 43, 62));
+        } else
+        {
+            t = new Image("maps/lev1-3.jpg");
+            items.add(new LittleChesse(400, 130));
+            items.add(new LittleChesse(185, 300));
+            items.add(new Big_cheese(680, 340));
+            items.add(new Big_cheese(100, 600));
+            items.add(new Big_cheese(1180, 300));
+            items.add(new Big_cheese(900, 100));
+            items.add(new Big_cheese(1030, 620));
 
-        items.add(new HorizontalWalls(220, 494, 14));
-        items.add(new HorizontalWalls(220, 470, 14));
-        items.add(new HorizontalWalls(370, 230, 10));
-        items.add(new HorizontalWalls(370, 190, 11));
-        items.add(new HorizontalWalls(0, Constants.MAP_HEIGHT - 100, 62));
-        items.add(new HorizontalWalls(0, 43, 62));
+            items.add(new BlackOil(110, 400));
+            items.add(new BlackOil(450, 300));
+            items.add(new BlackOil(1203, 512));
+
+            items.add(new Hole(700, 100));
+            items.add(new Clock(1000, 200));
+            items.add(new Flower(270, 100));
+            items.add(new Flower(1228, 630));
+
+            items.add(new Mousetrap(600, 600));
+            items.add(new MouseJerry(100, 600, k));
+
+            curLevelTime = Calendar.getInstance().getTime();
+            long level_time = ((MouseJerry) items.get(items.size() - 1)).life_time;
+            finishLevelTime = new Date(Calendar.getInstance().getTime().getTime() + level_time * 1000);
+
+            CatTom cat = new CatTom(1230, 50);
+
+            cat.pos.add(new Position(1230, 50));
+            cat.pos.add(new Position(1230, 600));
+            cat.pos.add(new Position(965, 600));
+            cat.pos.add(new Position(965, 125));
+            cat.pos.add(new Position(755,125));
+            cat.pos.add(new Position(755, 580));
+            cat.pos.add(new Position(500, 580));
+            cat.pos.add(new Position(500, 180));
+            cat.pos.add(new Position(250,180));
+            cat.pos.add(new Position(250, 520));
+            items.add(cat);
+
+            items.add(new VerticalWAlls(315, 255, 12));
+            items.add(new VerticalWAlls(582, 10, 12));
+            items.add(new VerticalWAlls(868, 230, 12));
+            items.add(new VerticalWAlls(1080, 10, 13));
+            items.add(new VerticalWAlls(1095, 10, 13));
+            items.add(new VerticalWAlls(42, 10, 60));
+            items.add(new VerticalWAlls(Constants.MAP_WIDTH - 110, 0 , 60));
+
+            items.add(new HorizontalWalls(0, Constants.MAP_HEIGHT - 100, 62));
+            items.add(new HorizontalWalls(0, 43, 62));
+        }
 
         gc = canvas.getGraphicsContext2D();
 
@@ -185,7 +243,12 @@ public class House implements Serializable {
                     canvas.setOpacity(1);
                     win.setVisible(false);
                     game_over.setVisible(false);
-                    load();
+                    if (lv.level1) {
+                        load("out1.txt");
+                    } else
+                    {
+                        load("out2.txt");
+                    }
                     control_p.setVisible(false);
                     game_stopped = false;
                 } catch (Exception e){ }
@@ -219,9 +282,7 @@ public class House implements Serializable {
                     game_over.setVisible(true);
                 }
                 if (!game_stopped) {
-
                     Iterator<DrawItems> it = items.iterator();
-
                     while (it.hasNext()) {
                         DrawItems current = it.next();
 
@@ -239,9 +300,7 @@ public class House implements Serializable {
                             }
                         }
                     }
-
                     it = items.iterator();
-
                     while (it.hasNext()) {
                         DrawItems current = it.next();
 
@@ -287,14 +346,14 @@ public class House implements Serializable {
                 break;
             }
             if(i == KeyCode.L){
-                load();
+                load("out1.txt");
                 break;
             }
         }
     }
 
     public void save() throws IOException {
-        FileOutputStream fos = new FileOutputStream("out.txt");
+        FileOutputStream fos = new FileOutputStream("out1.txt");
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(items);
         oos.flush();
@@ -302,8 +361,8 @@ public class House implements Serializable {
         fos.close();
     }
 
-    public void load() throws IOException {
-        FileInputStream fis = new FileInputStream("out.txt");
+    public void load(String str) throws IOException {
+        FileInputStream fis = new FileInputStream(str);
         ObjectInputStream oin = new ObjectInputStream(fis);
         try{
             items = (ArrayList<DrawItems>) oin.readObject();

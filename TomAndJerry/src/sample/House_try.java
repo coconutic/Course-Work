@@ -5,23 +5,23 @@ package sample;
  */
 //http://pastebin.com/K1kWwgke - 1Level
 
-        import javafx.animation.AnimationTimer;
-        import javafx.event.EventHandler;
-        import javafx.fxml.FXML;
-        import javafx.scene.canvas.Canvas;
-        import javafx.scene.canvas.GraphicsContext;
-        import javafx.scene.control.Label;
-        import javafx.scene.image.Image;
-        import javafx.scene.image.ImageView;
-        import javafx.scene.input.KeyCode;
-        import javafx.scene.input.MouseEvent;
-        import javafx.scene.layout.GridPane;
-        import javafx.scene.paint.Color;
+import javafx.animation.AnimationTimer;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 
 
-        import java.io.*;
-        import java.text.SimpleDateFormat;
-        import java.util.*;
+import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by katrin on 2/29/16.

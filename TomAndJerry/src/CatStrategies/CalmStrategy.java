@@ -36,7 +36,7 @@ public class CalmStrategy implements Strategy {
         IsGo = false;
         way = 0;
         lastpos = 0;
-        cat.pos = new ArrayList<Position>();
+     //   cat.pos = new ArrayList<Position>();
         wayback = new ArrayList<Position>();
 /*
         cat.pos.add(new Position(1230, 50));
@@ -48,14 +48,14 @@ public class CalmStrategy implements Strategy {
         cat.pos.add(new Position(500, 580));
         cat.pos.add(new Position(500, 180));
         cat.pos.add(new Position(250,180));
-        cat.pos.add(new Position(250, 520));*/
+        cat.pos.add(new Position(250, 520));/
 
         cat.pos.add(new Position(200, 620));
         cat.pos.add(new Position(1100, 620));
         cat.pos.add(new Position(1100, 430));
         cat.pos.add(new Position(330, 430));
         cat.pos.add(new Position(330, 150));
-        cat.pos.add(new Position(210, 150));
+        cat.pos.add(new Position(210, 150));*/
      //   pos.add(new Position(330, 155));
     }
 
