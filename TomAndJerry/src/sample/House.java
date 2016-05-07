@@ -350,7 +350,6 @@ public class House implements Serializable {
         gc.drawImage(t, 0, 0, Constants.MAP_WIDTH, Constants.MAP_HEIGHT);
     }
 
-
     public void check(KeyProccessing k) throws IOException
     {
         HashSet<KeyCode> temp = k.retHashSet();

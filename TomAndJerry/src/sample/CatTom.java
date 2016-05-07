@@ -35,7 +35,7 @@ public class CatTom extends DrawItems implements IMoveble, Serializable, IEnemy{
     public CatTom(int x, int y)
     {
         pos = new ArrayList<Position>();
-        cat = new Image("images/cat/cat_left.png");
+        cat = new Image("/images/cat/cat_left.png");
         lastpos = 0;
 
         setX(x);

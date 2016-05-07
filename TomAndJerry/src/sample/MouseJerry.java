@@ -13,7 +13,12 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
     private int speed;
     private int count_cheese;
     public long life_time;
-    private static Image picture;
+
+    private static Image cur_picture;
+    private static Image left1, left2;
+    private static Image right1, right2;
+    private static Image back1, back2;
+    private static Image straight1, straight2;
 
     private KeyProccessing kp;
 
@@ -26,12 +31,13 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
 
     private int cur = 0;
     private int score;
+    private int index_picture = 0;
 
     public void setPicture(int index) {
         if (index == 1) {
-            picture = new Image("/images/mouse/mouse_right.png");
+            cur_picture = new Image("/images/mouse/mouse_right1.png");
         } else {
-            picture = new Image("/images/mouse/mouse_(.png");
+            cur_picture = new Image("/images/mouse/mouse_(.png");
         }
     }
     public void setSpeed(int value)
@@ -66,6 +72,15 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
         Imove = true;
         isDead = false;
         end = false;
+
+        left1 = new Image("/images/mouse/mouse_left1.png");
+        left2 = new Image("/images/mouse/mouse_left2.png");
+        right1 = new Image("/images/mouse/mouse_right1.png");
+        right2 = new Image("/images/mouse/mouse_right2.png");
+        back1 = new Image("/images/mouse/mouse_back1.png");
+        back2 = new Image("/images/mouse/mouse_back2.png");
+        straight1 = new Image("/images/mouse/mouse_straight1.png");
+        straight2 = new Image("/images/mouse/mouse_straight2.png");
     }
 
 
@@ -97,10 +112,10 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
                     this.Imove = false;
                     continue;
                 } else if (dis <= 150 && IsVisible) {
-                            ((CatTom) obj).setAggressiveStrategy();
-                        } else if (dis > 150 && IsVisible) {
-                            ((CatTom) obj).setCalmStrategy();
-                        }
+                    ((CatTom) obj).setAggressiveStrategy();
+                } else if (dis > 150 && IsVisible) {
+                    ((CatTom) obj).setCalmStrategy();
+                }
             }
 
             if (obj instanceof IEatable && this != obj) {
@@ -183,7 +198,57 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
         tryStep(getX(), getY() + dy, items);
     }
 
+    public void change_picture(int newx, int newy){
+        int x = this.getX();
+        int y = this.getY();
 
+        if (speed > 0) {
+            if (index_picture <= 3) {
+                index_picture++;
+                return;
+            }
+        } else {
+            if (index_picture <= 5) {
+                index_picture++;
+                return;
+            }
+        }
+        index_picture = 0;
+        if (y == newy && newx > x)
+        {
+            if (cur_picture == right1){
+                cur_picture = right2;
+            } else
+            {
+                cur_picture = right1;
+            }
+        }
+
+        if (y == newy && newx < x) {
+            if (cur_picture == left1) {
+                cur_picture = left2;
+            } else{
+                cur_picture = left1;
+            }
+        }
+
+        if (x == newx && newy > y) {
+            if (cur_picture == straight1) {
+                cur_picture = straight2;
+            } else
+            {
+                cur_picture = straight1;
+            }
+        }
+
+        if (x == newx && newy < y) {
+            if (cur_picture == back1 ) {
+                cur_picture = back2;
+            } else{
+                cur_picture = back1;
+            }
+        }
+    }
     public void tryStep(int newx, int newy, ArrayList<DrawItems> items){
 
         boolean canMove = true;
@@ -210,6 +275,7 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
         }
 
         if (canMove) {
+            change_picture(newx, newy);
             setX(newx);
             setY(newy);
         }
@@ -217,12 +283,12 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
 
     public void draw(GraphicsContext gc) {
         if (IsVisible) {
-            gc.drawImage(picture, getX() - 18, getY() - 22);
+            gc.drawImage(cur_picture, getX() - 18, getY() - 22);
         }
         if (isDead)
         {
             this.setPicture(2);
-            gc.drawImage(picture, getX() - 18, getY() - 22);
+            gc.drawImage(cur_picture, getX() - 18, getY() - 22);
         }
     }
 
