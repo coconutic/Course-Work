@@ -11,7 +11,6 @@ import java.util.ArrayList;
  */
 public class CatTom extends DrawItems implements IMoveble, Serializable, IEnemy{
 
-    private static Image cat;
     private static CatStrategies.Strategy strategy;
 
     private transient static int[] dx = {4, 4};
@@ -21,8 +20,21 @@ public class CatTom extends DrawItems implements IMoveble, Serializable, IEnemy{
     private transient static int y_vc = 600;
 
     private int lastpos;
+    private int index_picture;
 
     public ArrayList<Position> pos;
+
+    private static Image cur_picture;
+    private static Image left1, left2;
+    private static Image right1, right2;
+    private static Image back1, back2;
+    private static Image straight1, straight2;
+
+    private static Image rback1, rback2;
+    private static Image lback1, lback2;
+    private static Image rstraight1, rstraight2;
+    private static Image lstraight1, lstraight2;
+
     public int getLastpos()
     {
         return lastpos;
@@ -35,13 +47,32 @@ public class CatTom extends DrawItems implements IMoveble, Serializable, IEnemy{
     public CatTom(int x, int y)
     {
         pos = new ArrayList<Position>();
-        cat = new Image("/images/cat/cat_left.png");
         lastpos = 0;
 
         setX(x);
         setY(y);
         setCalmStrategy();
         System.out.println("Tom is ready to run for a mouse");
+
+        cur_picture = new Image("/images/cat/cat_left1.png");
+
+        left1 = new Image("/images/cat/cat_left1.png");
+        left2 = new Image("/images/cat/cat_left2.png");
+        right1 = new Image("/images/cat/cat_right1.png");
+        right2 = new Image("/images/cat/cat_right2.png");
+        back1 = new Image("/images/cat/cat_back1.png");
+        back2 = new Image("/images/cat/cat_back2.png");
+        straight1 = new Image("/images/cat/cat_straight1.png");
+        straight2 = new Image("/images/cat/cat_straight2.png");
+
+        rback1 = new Image("/images/cat/r_back1.png");
+        rback2 = new Image("/images/cat/r_back2.png");
+        rstraight1 = new Image("/images/cat/r_straight1.png");
+        rstraight2 = new Image("/images/cat/r_straight2.png");
+        lback1 = new Image("/images/cat/l_back1.png");
+        lback2 = new Image("/images/cat/l_back2.png");
+        lstraight1 = new Image("/images/cat/l_straight1.png");
+        lstraight2 = new Image("/images/cat/l_straight2.png");
     }
 
 
@@ -105,6 +136,83 @@ public class CatTom extends DrawItems implements IMoveble, Serializable, IEnemy{
         return canMove;
     }
 
+    public void change_picture(int newx, int newy){
+        int x = this.getX();
+        int y = this.getY();
+
+        if (index_picture <= 7) {
+            index_picture++;
+            return;
+        }
+
+        index_picture = 0;
+        if (y == newy && newx > x)
+        {
+            if (cur_picture == right1){
+                cur_picture = right2;
+            } else
+            {
+                cur_picture = right1;
+            }
+        }
+
+        if (y == newy && newx < x) {
+            if (cur_picture == left1) {
+                cur_picture = left2;
+            } else{
+                cur_picture = left1;
+            }
+        }
+
+        if (x == newx && newy > y) {
+            if (cur_picture == straight1) {
+                cur_picture = straight2;
+            } else
+            {
+                cur_picture = straight1;
+            }
+        }
+
+        if (x == newx && newy < y) {
+            if (cur_picture == back1 ) {
+                cur_picture = back2;
+            } else{
+                cur_picture = back1;
+            }
+        }
+
+        if (newx > x && newy > y){
+            if (cur_picture == rstraight1) {
+                cur_picture = rstraight2;
+            } else {
+                cur_picture = rstraight1;
+            }
+        }
+
+        if (newx > x && newy < y) {
+            if (cur_picture == rback1){
+                cur_picture = rback2;
+            } else {
+                cur_picture = rback1;
+            }
+        }
+
+        if (newx < x && newy < y) {
+            if (cur_picture == lback1) {
+                cur_picture = lback2;
+            } else {
+                cur_picture = lback1;
+            }
+        }
+
+        if (newx < x && newy > y) {
+            if (cur_picture == lstraight1) {
+                cur_picture = lstraight2;
+            } else {
+                cur_picture = lstraight1;
+            }
+        }
+    }
 
     public void tryStep(int newx, int newy, ArrayList<DrawItems> items){
 
@@ -143,6 +251,7 @@ public class CatTom extends DrawItems implements IMoveble, Serializable, IEnemy{
 
 
     public void draw(GraphicsContext gc)  {
-        gc.drawImage(cat, getX() - 43, getY() - 46);
+
+        gc.drawImage(cur_picture, getX() - 43, getY() - 46);
     }
 }

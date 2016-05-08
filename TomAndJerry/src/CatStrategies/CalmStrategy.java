@@ -170,6 +170,7 @@ public class CalmStrategy implements Strategy {
             create_way(cat, items);
             go_path(cat, items);
         } else {
+            cat.change_picture(wayback.get(futureIndex).getX(), wayback.get(futureIndex).getY());
             cat.setX(wayback.get(futureIndex).getX());
             cat.setY(wayback.get(futureIndex).getY());
 
@@ -258,6 +259,7 @@ public class CalmStrategy implements Strategy {
 
 //        System.out.println(dx[index]);
 //        System.out.println(dy[index]);
+        cat.change_picture(x + dx[index], y + dy[index]);
         cat.setX(x + dx[index]);
         cat.setY(y + dy[index]);
 /*

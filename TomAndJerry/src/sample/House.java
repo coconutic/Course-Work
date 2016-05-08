@@ -359,7 +359,7 @@ public class House implements Serializable {
                 break;
             }
             if(i == KeyCode.L){
-                load("out2.txt");
+                load("out1.txt");
                 break;
             }
         }

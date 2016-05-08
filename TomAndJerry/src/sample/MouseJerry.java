@@ -20,6 +20,11 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
     private static Image back1, back2;
     private static Image straight1, straight2;
 
+    private static Image rback1, rback2;
+    private static Image lback1, lback2;
+    private static Image rstraight1, rstraight2;
+    private static Image lstraight1, lstraight2;
+
     private KeyProccessing kp;
 
     private boolean isEaten;
@@ -81,6 +86,15 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
         back2 = new Image("/images/mouse/mouse_back2.png");
         straight1 = new Image("/images/mouse/mouse_straight1.png");
         straight2 = new Image("/images/mouse/mouse_straight2.png");
+
+        rback1 = new Image("/images/mouse/r_back1.png");
+        rback2 = new Image("/images/mouse/r_back2.png");
+        rstraight1 = new Image("/images/mouse/r_straight1.png");
+        rstraight2 = new Image("/images/mouse/r_straight2.png");
+        lback1 = new Image("/images/mouse/l_back1.png");
+        lback2 = new Image("/images/mouse/l_back2.png");
+        lstraight1 = new Image("/images/mouse/l_straight1.png");
+        lstraight2 = new Image("/images/mouse/l_straight2.png");
     }
 
 
@@ -194,8 +208,7 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
             }
         }
 
-        tryStep(getX() + dx, getY(), items);
-        tryStep(getX(), getY() + dy, items);
+        tryStep(getX() + dx, getY() + dy, items);
     }
 
     public void change_picture(int newx, int newy){
@@ -248,7 +261,45 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
                 cur_picture = back1;
             }
         }
+
+        if (newx > x && newy > y){
+            if (cur_picture == rstraight1) {
+                cur_picture = rstraight2;
+            } else {
+                cur_picture = rstraight1;
+            }
+            System.out.println("hea");
+        }
+
+        if (newx > x && newy < y) {
+            if (cur_picture == rback1){
+                cur_picture = rback2;
+            } else {
+                cur_picture = rback1;
+            }
+             System.out.println("hea");
+        }
+
+        if (newx < x && newy < y) {
+            if (cur_picture == lback1) {
+                cur_picture = lback2;
+            } else {
+                cur_picture = lback1;
+            }
+             System.out.println("hea");
+        }
+
+        if (newx < x && newy > y) {
+            if (cur_picture == lstraight1) {
+                cur_picture = lstraight2;
+            } else {
+                cur_picture = lstraight1;
+            }
+             System.out.println("hea");
+        }
+        //System.out.println(cur_picture);
     }
+
     public void tryStep(int newx, int newy, ArrayList<DrawItems> items){
 
         boolean canMove = true;

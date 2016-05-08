@@ -43,6 +43,7 @@ public class AggressiveStrategy implements Strategy {
                 bestDist = mim.dist(mim.getX(), mim.getY(), newx, newy);
             }
         }
+        cat.change_picture(bestX, bestY);
         cat.setX(bestX);
         cat.setY(bestY);
     }
