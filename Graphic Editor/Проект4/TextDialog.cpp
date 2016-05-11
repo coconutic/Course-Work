@@ -1,2 +1,0 @@
-#include "TextDialog.h"
-

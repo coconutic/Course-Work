@@ -179,7 +179,7 @@ public class House implements Serializable {
 
             items.add(new Hole(700, 100));
             items.add(new Clock(1000, 200));
-            items.add(new Flower(270, 100));
+            items.add(new Clock(270, 100));
             items.add(new Flower(1228, 630));
 
             items.add(new Mousetrap(600, 600));
@@ -331,7 +331,7 @@ public class House implements Serializable {
 
                 fps++;
                 if (Math.abs(prevFpsNano - System.nanoTime()) >= 1000000000) {
-                    show_fps();
+              //      show_fps();
                 }
 
                 for (DrawItems obj : items) {
@@ -366,7 +366,7 @@ public class House implements Serializable {
     }
 
     public void save() throws IOException {
-        FileOutputStream fos = new FileOutputStream("out1.txt");
+        FileOutputStream fos = new FileOutputStream("out2.txt");
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(items);
         oos.flush();

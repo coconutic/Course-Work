@@ -13,8 +13,8 @@
     <Canvas fx:id="canvas" width="1366" height="768" />
     <GridPane minWidth="1366" style="-fx-background-color: rgb(71, 255, 235, 0.5);">
         <columnConstraints>
-            <ColumnConstraints percentWidth="5"/>
             <ColumnConstraints percentWidth="10"/>
+            <ColumnConstraints percentWidth="0"/>
             <ColumnConstraints percentWidth="30"/>
             <ColumnConstraints percentWidth="30"/>
             <ColumnConstraints percentWidth="30"/>
@@ -25,11 +25,11 @@
         <ImageView fx:id="pause" GridPane.columnIndex="0" GridPane.rowIndex="0">
             <Image url="/images/pause.png"/>
         </ImageView>
-        <Label fx:id="fps_label" GridPane.columnIndex="1" GridPane.rowIndex="0" textFill="darkmagenta">
+       <!-- <Label fx:id="fps_label" GridPane.columnIndex="1" GridPane.rowIndex="0" textFill="darkmagenta">
             <font>
                <Font name="Arial" size="25" />
             </font>
-        </Label>
+        </Label> !-->
         <Label fx:id="score_l"  GridPane.columnIndex="2" GridPane.rowIndex="0" text="Score: " textFill="#ff6519">
             <font>
                 <Font name="DisneyPark" size = "70.0"/>

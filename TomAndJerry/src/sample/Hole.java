@@ -18,9 +18,6 @@ public class Hole extends DrawItems implements Serializable{
         image_of_hole = new Image("images/hole.png");
     }
 
-    //public boolean open(){ }
-    //public boolean cat_close(){ }
-
     public void draw(GraphicsContext gc) {
         gc.drawImage(image_of_hole, getX() - 16, getY() - 16);
     }

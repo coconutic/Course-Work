@@ -32,37 +32,7 @@ public class CalmStrategy implements Strategy {
         wayback = new ArrayList<Position>();
     }
 
-    /*public int getPos(int curx, int cury){
-        for (int i = 0; i < cat.pos.size() - 1; i++){
-            int x1 = pos.get(i).getX();
-            int x2 = pos.get(i + 1).getX();
-            int y1 = pos.get(i).getY(); int y2 = pos.get(i + 1).getY();
 
-            if (y1 > y2)
-            {
-                int temp = y1;
-                y1 = y2;
-                y2 = temp;
-            }
-
-            if (x1 > x2)
-            {
-                int temp = x1;
-                x1 = x2;
-                x2 = temp;
-            }
-            /*
-            System.out.println(String.format("%d %d %d", x1, curx, x2));
-             System.out.println(String.format("%d %d %d", y1, cury, y2));
-
-            if ((x1 <= curx && curx <= x2) && (y1 <= cury && cury <= y2))
-            {
-                return i + 1;
-            }
-        }
-        return -1;
-    }
-*/
     private double getDistToTheWay(Position pos1, Position pos2, Position cur_pos) {
         double A = pos1.getY() - pos2.getY();
         double B = pos2.getX() - pos1.getX();
@@ -140,7 +110,6 @@ public class CalmStrategy implements Strategy {
             wayback.add(cur);
             cur = history.get(cur);
         }
-  //  System.out.println("************************");
         for (int i = 0; i < wayback.size() / 2; i++) {
             Position temp = wayback.get(i);
             wayback.set(i, wayback.get(wayback.size() - i - 1));
@@ -214,8 +183,8 @@ public class CalmStrategy implements Strategy {
             goaly = cat.pos.get(poss).getY();
         }
 /*
-        int subx = goalx - x;
-        int suby = goaly - y;
+
+
 
         System.out.println(String.format("Last Pos = %d", lastpos));
         System.out.println(String.format("Poss = %d", poss));
@@ -230,11 +199,7 @@ public class CalmStrategy implements Strategy {
         for (int i = 0; i < dx.length; i++) {
             int newX = x + dx[i];
             int newY = y + dy[i];
-/*
-            if (!cat.isFree(newX, newY, items)) {
-                continue;
-            }
-*/
+
             double dist1 = cat.dist(newX, newY, goalx, goaly);
             double dist2 = getDistToTheWay(cat.pos.get(lastpos), cat.pos.get(poss), new Position(newX, newY));
 
@@ -262,34 +227,13 @@ public class CalmStrategy implements Strategy {
         cat.change_picture(x + dx[index], y + dy[index]);
         cat.setX(x + dx[index]);
         cat.setY(y + dy[index]);
-/*
-        int subNewx = goalx - cat.getX();
-        int subNewy = goaly - cat.getY();
-*/
+
+
        /* System.out.println(subNewx);
         System.out.println(subNewy);
         System.out.println("============================");
         System.out.println(Move);*/
-/*
-        if (subx * subNewx < 0 || suby * subNewy < 0 ||
-                (subx * subNewx == 0 && suby * subNewy == 0)) {
-            if (!Move) {
-                lastpos--;
-            } else {
-                lastpos++;
-            }
 
-            if (lastpos <= 0) {
-                Move = true;
-                lastpos++;
-            }
-
-            if (lastpos == pos.size() - 1) {
-                Move = false;
-                lastpos--;
-            }
-        }
-        */
 
         if ((cat.getX() == cat.pos.get(cat.pos.size() - 1).getX() &&
                 cat.getY() == cat.pos.get(cat.pos.size() - 1).getY()) ||

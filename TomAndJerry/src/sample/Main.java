@@ -106,26 +106,3 @@ public class Main extends Application {
     }
 }
 
-
-/*class FXMLLOADER {
-    Object controller;
-    Page page;
-
-    Object getController() {
-        return controller;
-    }
-
-    private page loadpage() {
-
-        return new Page();
-    }
-
-    public static void load() {
-        return loadpage();
-    }
-
-    public void load() {
-        page = loadpage();
-        controller = page.controller;
-    }
-}*/

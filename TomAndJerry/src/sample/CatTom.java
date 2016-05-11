@@ -76,18 +76,6 @@ public class CatTom extends DrawItems implements IMoveble, Serializable, IEnemy{
     }
 
 
-    public void signal(MouseJerry jer)
-    {
-        double distance = dist(getX(), getY(), jer.getX(), jer.getY());
-
-        if( distance <= 10 )
-        {
-            System.out.println("Tom see Jerry, start run\n");
-        }else
-        {
-            System.out.println("Tom doesn't see Jerry\n");
-        }
-    }
 
     public double dist(int x1, int y1, int x2, int y2)
     {

@@ -15,9 +15,7 @@ public class Cheese extends DrawItems implements Serializable, IEatable{
     public int score;
     public boolean IsEaten;
 
-    public void draw(GraphicsContext gc)
-    {
-    }
+    public void draw(GraphicsContext gc) { }
 
     @Override
     public boolean isEaten() {

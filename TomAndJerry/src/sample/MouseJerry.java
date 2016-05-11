@@ -268,7 +268,6 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
             } else {
                 cur_picture = rstraight1;
             }
-            System.out.println("hea");
         }
 
         if (newx > x && newy < y) {
@@ -277,7 +276,6 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
             } else {
                 cur_picture = rback1;
             }
-             System.out.println("hea");
         }
 
         if (newx < x && newy < y) {
@@ -286,7 +284,6 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
             } else {
                 cur_picture = lback1;
             }
-             System.out.println("hea");
         }
 
         if (newx < x && newy > y) {
@@ -295,9 +292,7 @@ public class MouseJerry extends DrawItems implements IMoveble, Serializable, IEa
             } else {
                 cur_picture = lstraight1;
             }
-             System.out.println("hea");
         }
-        //System.out.println(cur_picture);
     }
 
     public void tryStep(int newx, int newy, ArrayList<DrawItems> items){
