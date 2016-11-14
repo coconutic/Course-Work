@@ -76,8 +76,9 @@ class Procs(object):
     def sort_by_name(self):
         return sorted(self.list_procs, key = lambda p: p.name)
     
-    def filter(self, s):
+    def my_filter(self, s):
         result = []
+        s = s[:-1]
         for p in self.list_procs:
             info = str(p)
             if s in info:
@@ -86,6 +87,7 @@ class Procs(object):
     
     def search(self, s):
         ans = []
+        s = s[:-1]
         for p in self.list_procs:
             m = re.match('['+ s +']+', str(p.name))
             if m != None:
@@ -109,7 +111,7 @@ def get_thread():
 def main():
     pr = Procs()
     pr.get_processes()
-    l = pr.filter('co')
+    l = pr.my_filter('co')
     for p in l:
        print str(p)
 

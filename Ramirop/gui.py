@@ -17,6 +17,8 @@ flag_filter = False
 flag_search = False
 
 def kill_proc():
+    #if len(lb.curselection()) != 0:
+        # print lb.get(lb.curselection()[0], lb.curselection()[0])
     pass
 
 def suspend_proc():
@@ -56,7 +58,6 @@ def set_flag_name():
 def set_flag_filter():
     global flag_filter
     flag_filter = True
-
 
 def set_flag_search():
     global flag_search
@@ -101,7 +102,7 @@ def build_app():
     run_threads_value.place(x = 133, y = 70)
 
     scrollbar.pack(side = tk.RIGHT, fill = tk.Y)    
-    return (lb, tx)
+    return (lb, tx, scrollbar)
 
 
 def check_flags():
@@ -119,6 +120,7 @@ def check_flags():
 def update(l):
     lb = l[0]
     tx = l[1]
+    scrollbar = l[2]
     view_procs(lb, tx)
     p = Procs()
     p.get_processes()
@@ -128,16 +130,21 @@ def update(l):
         v_uptime.set(get_uptime())
         v_thr.set(get_thread())
         if lb.size() == 0:
-            print "heaaar"
             view_procs(lb, tx)
-        if check_flags() or index == 1000:
+        if check_flags() or index == 10000:
+            #tuple_pos = scrollbar.get() 
+            #first = tuple_pos[0]
+            #last = tuple_pos[1]
+            vw = lb.yview()
             lb.delete(0, tk.END)
+            #print scrollbar.get()
+            #lb.select_set(tk.END)
             view_procs(lb, tx)
             index = 0
-        root.update()
+            lb.yview_moveto(vw[0])
+            root.update()
         index += 1
-
-
+        
 def view_procs(box, tx):
     global flag_sort_pid
     global flag_sort_name
@@ -156,17 +163,17 @@ def view_procs(box, tx):
     if flag_filter:
         text = tx.get(1.0, tk.END)
         if text != " " and text != "":
-            procs = pr.filter(text)
+            procs = pr.my_filter(text)
         flag_filter = False
     if flag_search:
         text = tx.get(1.0, tk.END)
         if text != " " and text != "":
             procs = pr.search(text)
         flag_search = False
-
     for i in xrange(len(procs)):
         box.insert(i, str(procs[i]))
         box.itemconfig(i, foreground = "#6543B5")
+   
 
 root.after(1000, update(build_app()))
 root.mainloop()
