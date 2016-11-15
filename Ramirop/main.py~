@@ -32,16 +32,16 @@ class Proc(object):
                str(self.mem_p) + space * max6 + t + \
                str(self.cpu_p)
 
-def kill(pid):
+def kill_proc(pid):
     os.kill(pid, signal.SIGKILL)
 
-def suspend(pid):
+def suspend_proc(pid):
     os.kill(pid, signal.SIGSTOP)
 
-def resume(pid):
+def resume_proc(pid):
     os.kill(pid, signal.SIGCONT)
 
-def terminate(pid):
+def terminate_proc(pid):
     os.kill(pid, signal.SIGTERM)
 
 def set_nice(p_id, n):

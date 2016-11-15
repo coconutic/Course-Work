@@ -52,10 +52,9 @@ def set_nice_proc():
     pid = get_pid()
     set_nice(int(pid), 10)
 
-
 def view_popup(event):
+    print "click!"
     popup.tk_popup(event.x_root, event.y_root, 0)
-
 
 def set_flag_pid():
     global flag_sort_pid
