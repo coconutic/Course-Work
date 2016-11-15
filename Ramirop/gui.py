@@ -1,8 +1,9 @@
 import Tkinter as tk
 from main import *
+import time
 
 root = tk.Tk()
-root.wm_title("Htop")
+root.wm_title("Ramirop")
 root.minsize(width = 900, height = 620)
 root.maxsize(width = 900, height = 620)
 root.resizable(width = False, height = False)
@@ -16,9 +17,8 @@ flag_sort_name = False
 flag_filter = False
 flag_search = False
 
+
 def kill_proc():
-    #if len(lb.curselection()) != 0:
-        # print lb.get(lb.curselection()[0], lb.curselection()[0])
     pass
 
 def suspend_proc():
@@ -33,13 +33,6 @@ def terminate_proc():
 def set_nice_proc():
     pass
 
-popup = tk.Menu(root, tearoff=0)
-popup.add_command(label = "Kill", command = kill_proc)
-popup.add_command(label = "Suspend", command = suspend_proc)
-popup.add_command(label = "Resume", command = resume_proc)
-popup.add_command(label = "Terminate", command = terminate_proc)
-popup.add_separator()
-popup.add_command(label="Set nice", command = set_nice_proc)
 
 def view_popup(event):
     print "click!"
@@ -63,48 +56,6 @@ def set_flag_search():
     global flag_search
     flag_search = True
 
-
-def build_app():
-    btn1 = tk.Button(root, text = "Sort by pid", width = 10, fg = "#6543B5", command = set_flag_pid)
-    btn2 = tk.Button(root, text = "Sort by name", width = 10, fg = "#6543B5", command = set_flag_name)
-    btn3 = tk.Button(root, text = "Filter", width = 10, fg = "#6543B5", command = set_flag_filter)
-    btn4 = tk.Button(root, text = "Search", width = 10, fg = "#6543B5", command = set_flag_search)
-    tx = tk.Text(root, font = ('times',12), width = 75, height = 1, wrap = tk.WORD, 
-            highlightbackground = "#6543B5")
-
-    scrollbar = tk.Scrollbar(root)
-    lb = tk.Listbox(root, font = ('Monaco', 12), width = 117, height = 25, selectbackground = "#FFE692",
-            yscrollcommand = scrollbar.set)
-    scrollbar.config(command = lb.yview)
-    lb.bind("<Button-2>", view_popup)
-    table_row = tk.Label(root, font = ('aAssuanNr', 14), fg = "#2341B6", text = "   Pid                                     Name                                           User name              Status     Nice         Memory %              Cpu %")
-    uptime_l = tk.Label(root, text = 'Uptime : ', font = ('Monaco', 15), fg = "#07C8F9")
-    uptime_value = tk.Label(root, textvariable = v_uptime, font = ('Monaco', 15), fg = "#F9B807")
-    tasks_l = tk.Label(root, text = 'Tasks : ', font = ('Monaco', 15), fg = "#07C8F9")
-    tasks_value = tk.Label(root, textvariable = v_task, font = ('Monaco', 15), fg = "#F9B807")
-    run_threads_l = tk.Label(root, text = 'Run threads : ', font = ('Monaco', 15), fg = "#07C8F9")
-    run_threads_value = tk.Label(root, textvariable = v_thr, font = ('Monaco', 15), fg = "#F9B807")
-
-    btn1.place(x = 5, y = 600)
-    btn2.place(x = 105, y = 600)
-    btn3.place(x = 205, y = 600)
-    btn4.place(x = 305, y = 600)
-
-    tx.place(x = 405, y = 597) 
-    lb.place(x = 10, y = 140)
-    table_row.place(x = 10, y = 110)
-
-    uptime_l.place(x = 10, y = 20)
-    uptime_value.place(x = 89, y = 20) 
-    tasks_l.place(x = 10, y = 45)
-    tasks_value.place(x = 82, y = 45)
-    run_threads_l.place(x = 10, y = 70)
-    run_threads_value.place(x = 133, y = 70)
-
-    scrollbar.pack(side = tk.RIGHT, fill = tk.Y)    
-    return (lb, tx, scrollbar)
-
-
 def check_flags():
     global flag_sort_pid
     global flag_sort_name
@@ -117,35 +68,78 @@ def check_flags():
     return False
 
 
-def update(l):
-    lb = l[0]
-    tx = l[1]
-    scrollbar = l[2]
-    view_procs(lb, tx)
+btn1 = tk.Button(root, text = "Sort by pid", width = 10, fg = "#6543B5", command = set_flag_pid)
+btn2 = tk.Button(root, text = "Sort by name", width = 10, fg = "#6543B5", command = set_flag_name)
+btn3 = tk.Button(root, text = "Filter", width = 10, fg = "#6543B5", command = set_flag_filter)
+btn4 = tk.Button(root, text = "Search", width = 10, fg = "#6543B5", command = set_flag_search)
+tx = tk.Text(root, font = ('times',12), width = 75, height = 1, wrap = tk.WORD, 
+        highlightbackground = "#6543B5")
+
+scrollbar = tk.Scrollbar(root)
+lb = tk.Listbox(root, font = ('Monaco', 12), width = 117, height = 25, selectbackground = "#FFE692",
+        yscrollcommand = scrollbar.set)
+scrollbar.config(command = lb.yview)
+lb.bind("<Button-2>", view_popup)
+table_row = tk.Label(root, font = ('aAssuanNr', 14), fg = "#2341B6", text = "   Pid                                     Name                                           User name              Status     Nice         Memory %              Cpu %")
+uptime_l = tk.Label(root, text = 'Uptime : ', font = ('Monaco', 15), fg = "#07C8F9")
+uptime_value = tk.Label(root, textvariable = v_uptime, font = ('Monaco', 15), fg = "#F9B807")
+tasks_l = tk.Label(root, text = 'Tasks : ', font = ('Monaco', 15), fg = "#07C8F9")
+tasks_value = tk.Label(root, textvariable = v_task, font = ('Monaco', 15), fg = "#F9B807")
+run_threads_l = tk.Label(root, text = 'Run threads : ', font = ('Monaco', 15), fg = "#07C8F9")
+run_threads_value = tk.Label(root, textvariable = v_thr, font = ('Monaco', 15), fg = "#F9B807")
+
+btn1.place(x = 5, y = 600)
+btn2.place(x = 105, y = 600)
+btn3.place(x = 205, y = 600)
+btn4.place(x = 305, y = 600)
+
+tx.place(x = 405, y = 597) 
+lb.place(x = 10, y = 140)
+table_row.place(x = 10, y = 110)
+
+uptime_l.place(x = 10, y = 20)
+uptime_value.place(x = 89, y = 20) 
+tasks_l.place(x = 10, y = 45)
+tasks_value.place(x = 82, y = 45)
+run_threads_l.place(x = 10, y = 70)
+run_threads_value.place(x = 133, y = 70)
+
+scrollbar.pack(side = tk.RIGHT, fill = tk.Y)    
+
+popup = tk.Menu(root, tearoff=0)
+popup.add_command(label = "Kill", command = kill_proc)
+popup.add_command(label = "Suspend", command = suspend_proc)
+popup.add_command(label = "Resume", command = resume_proc)
+popup.add_command(label = "Terminate", command = terminate_proc)
+popup.add_separator()
+popup.add_command(label="Set nice", command = set_nice_proc)
+
+
+
+def update():
+    vw = lb.yview()
+    cur_select = lb.curselection()
+
+    lb.delete(0, tk.END)
+    view_procs()
+    
     p = Procs()
     p.get_processes()
-    index = 0
-    while True:
-        v_task.set(p.get_num())
-        v_uptime.set(get_uptime())
-        v_thr.set(get_thread())
-        if lb.size() == 0:
-            view_procs(lb, tx)
-        if check_flags() or index == 10000:
-            #tuple_pos = scrollbar.get() 
-            #first = tuple_pos[0]
-            #last = tuple_pos[1]
-            vw = lb.yview()
-            lb.delete(0, tk.END)
-            #print scrollbar.get()
-            #lb.select_set(tk.END)
-            view_procs(lb, tx)
-            index = 0
-            lb.yview_moveto(vw[0])
-            root.update()
-        index += 1
-        
-def view_procs(box, tx):
+    
+    v_task.set(p.get_num())
+    v_uptime.set(get_uptime())
+    v_thr.set(get_thread())
+    select = 0
+    
+    if len(cur_select) != 0:
+        select = cur_select[0]
+    
+    lb.select_set(select)
+    lb.yview_moveto(vw[0])
+    root.update()
+    root.after(2000, update())
+
+def view_procs():
     global flag_sort_pid
     global flag_sort_name
     global flag_filter
@@ -171,9 +165,9 @@ def view_procs(box, tx):
             procs = pr.search(text)
         flag_search = False
     for i in xrange(len(procs)):
-        box.insert(i, str(procs[i]))
-        box.itemconfig(i, foreground = "#6543B5")
-   
+        lb.insert(i, str(procs[i]))
+        lb.itemconfig(i, foreground = "#6543B5")
 
-root.after(1000, update(build_app()))
-root.mainloop()
+
+view_procs()
+update()
