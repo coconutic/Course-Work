@@ -1,6 +1,6 @@
 import Tkinter as tk
 from main import *
-import time
+import psutil
 
 root = tk.Tk()
 root.wm_title("Ramirop")
@@ -11,6 +11,8 @@ root.resizable(width = False, height = False)
 v_uptime = tk.StringVar()
 v_task = tk.StringVar()
 v_thr = tk.StringVar()
+mem_value = tk.StringVar()
+cpu_value = tk.StringVar()
 
 flag_sort_pid = False
 flag_sort_name = False
@@ -145,6 +147,18 @@ run_threads_value.place(x = 133, y = 70)
 
 scrollbar.pack(side = tk.RIGHT, fill = tk.Y)    
 
+memory_l = tk.Label(root, text = "Memory % :", font = ('Monaco', 15), fg = "#07C8F9")
+memory_l.place(x = 570, y = 20)
+
+cpu_l = tk.Label(root, text = "Cpu % :", font = ('Monaco', 15), fg = "#07C8F9")
+cpu_l.place(x = 570, y = 45)
+
+memory_v = tk.Label(root, textvariable = mem_value, font = ('Monaco', 15), fg = "#F9B807")
+cpu_v = tk.Label(root, textvariable = cpu_value, font = ('Monaco', 15), fg = "#F9B807")
+
+memory_v.place(x = 800, y = 20)
+cpu_v.place(x = 800, y = 45)
+
 popup = tk.Menu(root, tearoff=0)
 popup.add_command(label = "Kill", command = kill_proc)
 popup.add_command(label = "Suspend", command = suspend_proc)
@@ -166,11 +180,35 @@ def update():
     p = Procs()
     p.get_processes()
     
+    c1 = tk.Canvas(root, width = 101, height = 10, bg = "#C9C2C2")
+    c1.place(x = 676, y = 28)
+
+    c2 = tk.Canvas(root, width = 101, height = 10, bg = "#C9C2C2")
+    c2.place(x = 676, y = 53)
+   
+    data = get_data()
+    memory = data[0]
+    cpu = data[1]
+    if memory < 40:
+        id1 = c1.create_rectangle(6, 6, int(memory), 8, fill = "#98FCDB", outline = "#98FCDB")
+    elif memory > 80:
+        id1 = c1.create_rectangle(6, 6, int(memory), 8, fill = "#FF562C", outline = "#FF562C")
+    else:
+        id1 = c1.create_rectangle(6, 6, int(memory), 8, fill = "#FFFC97", outline = "#FFFC97")
+    if cpu < 40:
+        id2 = c2.create_rectangle(6, 6, int(cpu), 8, fill = "#98FCDB", outline = "#98FCDB")
+    elif cpu > 50:
+        id2 = c2.create_rectangle(6, 6, int(cpu), 8, fill = "#FF562C", outline = "#FF562C")
+    else:
+        id2 = c2.create_rectangle(6, 6, int(cpu), 8, fill = "#FFFC97", outline = "#FFFC97")
+    
+    mem_value.set(str(memory) + "%")
+    cpu_value.set(str(cpu) + "%")
     v_task.set(p.get_num())
     v_uptime.set(get_uptime())
     v_thr.set(get_thread())
     select = 0
-    
+        
     if len(cur_select) != 0:
         select = cur_select[0]
     select_str = lb.get(select, select)[0]
@@ -178,6 +216,15 @@ def update():
     lb.yview_moveto(vw[0])
     root.update()
     root.after(2000, update())
+
+
+def get_data():
+    pr = Procs()
+    procs = pr.get_processes()
+
+    memory = psutil.virtual_memory()[2]
+    cpu = psutil.cpu_percent()
+    return (memory, cpu)
 
 
 def view_procs():

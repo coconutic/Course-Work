@@ -6,14 +6,20 @@ import re
 import threading
 
 class Proc(object):
-    def __init__(self, pid, name, username, status, nice, memory_persent, cpu_percent):
+    def __init__(self, pid, name, username, status, nice, memory_percent, cpu_percent):
         self.pid = pid
         self.name = name
         self.username = username
         self.status = status
         self.nice = nice
-        self.mem_p = memory_persent
-        self.cpu_p = cpu_percent
+        if memory_percent == None:
+            self.mem_p = 0
+        else:
+            self.mem_p = memory_percent
+        if cpu_percent == None:
+            self.cpu_p = 0
+        else:
+            self.cpu_p = cpu_percent
 
     def __str__(self):
         t = " | "
